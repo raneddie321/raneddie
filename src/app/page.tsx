@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import RanEddieAuth from '@/components/RanEddieAuth';
 import { ArrowLeft, ArrowRight, ArrowUpLeft, Search, ShoppingCart, ChevronDown, Menu, X, Sun, Moon, Monitor, Sparkles, Gamepad2, Globe2, Layers3, ArrowUpRight } from 'lucide-react';
 const FIZZ='https://fizzbrowser.vercel.app/';
 const PLAY='https://play.google.com/store/apps/details?id=com.snakebrawl.raneddie';
@@ -13,6 +14,7 @@ export default function Home(){
  const [theme,setTheme]=useState<'light'|'dark'>('light');
  const [slide,setSlide]=useState(0);
  const [menu,setMenu]=useState(false);
+ const [authOpen,setAuthOpen]=useState(false);
  useEffect(()=>{const saved=localStorage.getItem('raneddie-theme');const initial=saved==='dark'?'dark':'light';setTheme(initial);document.documentElement.dataset.theme=initial;},[]);
  const changeTheme=(next:'light'|'dark')=>{setTheme(next);document.documentElement.dataset.theme=next;localStorage.setItem('raneddie-theme',next);};
  const current=slides[slide];
@@ -22,7 +24,7 @@ export default function Home(){
    <nav className={menu?'navlinks open':'navlinks'}>
     <a href="#products" onClick={()=>setMenu(false)}>Products</a><a href="#lab" onClick={()=>setMenu(false)}>Lab</a><a href="#studio" onClick={()=>setMenu(false)}>Studio</a><a href="#contact" onClick={()=>setMenu(false)}>Contact</a>
    </nav>
-   <div className="navtools"><a className="navlink" href={FIZZ}>Get Fizz <ArrowUpRight size={15}/></a><button type="button" className="sign-in-button">Sign in</button><button className="theme-toggle" onClick={()=>changeTheme(theme==='light'?'dark':'light')} aria-label={theme==='light'?'Switch to dark mode':'Switch to light mode'} title={theme==='light'?'Dark mode':'Light mode'}>{theme==='light'?<Moon size={17}/>:<Sun size={17}/>}</button></div>
+   <div className="navtools"><a className="navlink" href={FIZZ}>Get Fizz <ArrowUpRight size={15}/></a><button type="button" className="sign-in-button" onClick={()=>setAuthOpen(true)}>Sign in</button><button className="theme-toggle" onClick={()=>changeTheme(theme==='light'?'dark':'light')} aria-label={theme==='light'?'Switch to dark mode':'Switch to light mode'} title={theme==='light'?'Dark mode':'Light mode'}>{theme==='light'?<Moon size={17}/>:<Sun size={17}/>}</button></div>
   </header>
   <section className={'hero hero-'+current.kind} id="home">
    <div className="hero-inner">
@@ -38,5 +40,6 @@ export default function Home(){
   <section className="lab-section" id="lab"><div className="section-title"><span>IN DEVELOPMENT</span><h2>There's more in the making.</h2></div><div className="lab-row"><article><small>PROJECT NEON · Q1 2027</small><h3>NEON</h3><p>A new kind of digital energy.</p></article><article><small>PROJECT VAULT · COMING SOON</small><h3>VAULT</h3><p>Something worth keeping close.</p></article><article><small>PROJECT FLOW · RESEARCH</small><h3>FLOW</h3><p>Make space for what matters.</p></article></div></section>
   <section className="studio-section" id="studio"><div className="studio-logo"><Logo/></div><div><span>THE STUDIO</span><h2>Ideas into experiences.</h2><p>RanEddie is an independent product studio building digital products across browsers, games, apps and the web. Thoughtful design, careful engineering, and a belief that software should feel great to use.</p></div></section>
   <footer id="contact"><a href="#home" className="footer-brand"><Logo/></a><div className="footer-links"><a href={FIZZ}>Fizz Browser</a><a href={PLAY}>Snake Brawl</a><a href="#lab">Lab</a><a href="mailto:contact@raneddie.com">Contact</a></div><span>© 2026 RanEddie Studio. All rights reserved.</span></footer>
+ <RanEddieAuth open={authOpen} onClose={()=>setAuthOpen(false)} />
  </main>;
 }
