@@ -14,7 +14,7 @@ type Tab = 'overview'|'profile'|'security';
 export default function RanEddieAuth({open,onClose}:{open:boolean;onClose:()=>void}) {
  const [mode,setMode]=useState<Mode>('signin'),[tab,setTab]=useState<Tab>('overview');
  const [email,setEmail]=useState(''),[username,setUsername]=useState(''),[fullName,setFullName]=useState(''),[password,setPassword]=useState(''),[code,setCode]=useState('');
- const [user,setUser]=useState<User|null>(null),[card,setCard]=useState<Card|null>(null),[session,setSession]=useState<Payload['session']>(null);
+ const [user,setUser]=useState<User|null>(null),[card,setCard]=useState<Card|null>(null),[session,setSession]=useState<NonNullable<Payload['session']> | null>(null);
  const [token,setToken]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[showPassword,setShowPassword]=useState(false),[copied,setCopied]=useState(false);
  const [returnTo,setReturnTo]=useState(''),[product,setProduct]=useState('raneddie'),[oauthState,setOauthState]=useState(''),[codeChallenge,setCodeChallenge]=useState('');
  const auth = useCallback(async (path:string,body?:Record<string,unknown>,bearer?:string):Promise<Payload>=>{
