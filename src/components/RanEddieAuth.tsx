@@ -16,7 +16,7 @@ export default function RanEddieAuth({open,onClose}:{open:boolean;onClose:()=>vo
  const [email,setEmail]=useState(''),[username,setUsername]=useState(''),[fullName,setFullName]=useState(''),[password,setPassword]=useState(''),[code,setCode]=useState('');
  const [user,setUser]=useState<User|null>(null),[card,setCard]=useState<Card|null>(null),[session,setSession]=useState<Payload['session']>(null);
  const [token,setToken]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[showPassword,setShowPassword]=useState(false),[copied,setCopied]=useState(false);
- const [returnTo,setReturnTo]=useState(''),[product,setProduct]=useState('raneddie'),[oauthState,setOauthState]=useState('');
+ const [returnTo,setReturnTo]=useState(''),[product,setProduct]=useState('raneddie'),[oauthState,setOauthState]=useState(''),[codeChallenge,setCodeChallenge]=useState('');
  const auth = useCallback(async (path:string,body?:Record<string,unknown>,bearer?:string):Promise<Payload>=>{
    const res=await fetch(API+'/'+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json','apikey':API_KEY,...(bearer?{Authorization:'Bearer '+bearer}:{})},...(body?{body:JSON.stringify(body)}:{})});
    const data=await res.json().catch(()=>({message:'Unexpected server response'}));
@@ -26,17 +26,17 @@ export default function RanEddieAuth({open,onClose}:{open:boolean;onClose:()=>vo
  const accept=(d:Payload)=>{if(d.token){localStorage.setItem('raneddie_id_token',d.token);setToken(d.token);} if(d.user)setUser(d.user);if(d.card)setCard(d.card);if(d.session)setSession(d.session);};
  const loadMe=useCallback(async(t:string)=>{try{const d=await auth('me',undefined,t);accept(d);setMode('dashboard');}catch{localStorage.removeItem('raneddie_id_token');setToken('');setUser(null);setCard(null);}},[auth]);
  useEffect(()=>{if(!open)return;setError('');setNotice('');const t=localStorage.getItem('raneddie_id_token');if(t){setToken(t);void loadMe(t);}
-   const q=new URLSearchParams(window.location.search);const rt=q.get('return_to');const pr=q.get('product');const st=q.get('state');
-   if(rt){setReturnTo(rt);setProduct(pr||'raneddie');setOauthState(st||'');setMode('signin');void auth('authorize?return_to='+encodeURIComponent(rt)+'&product='+encodeURIComponent(pr||'raneddie')).catch(e=>setError(e.message));}
+   const q=new URLSearchParams(window.location.search);const rt=q.get('return_to');const pr=q.get('product');const st=q.get('state');const ch=q.get('code_challenge');
+   if(rt){setReturnTo(rt);setProduct(pr||'raneddie');setOauthState(st||'');setCodeChallenge(ch||'');setMode('signin');if(!ch)setError('The requesting product did not provide a PKCE challenge.');else void auth('authorize?return_to='+encodeURIComponent(rt)+'&product='+encodeURIComponent(pr||'raneddie')).catch(e=>setError(e.message));}
  },[open,auth,loadMe]);
  useEffect(()=>{if(!open)return;const old=document.body.style.overflow;document.body.style.overflow='hidden';const key=(e:KeyboardEvent)=>{if(e.key==='Escape')onClose();};window.addEventListener('keydown',key);return()=>{document.body.style.overflow=old;window.removeEventListener('keydown',key);};},[open,onClose]);
  const run=async(fn:()=>Promise<void>)=>{setBusy(true);setError('');setNotice('');try{await fn();}catch(e){setError(e instanceof Error?e.message:'Something went wrong.');}finally{setBusy(false);}};
  const submitSignup=()=>run(async()=>{const d=await auth('signup',{email,username,full_name:fullName,password,product:'raneddie'});setMode('verify');setNotice(d.email_delivery==='sent'?'We sent a 6-digit code to your email.':d.email_delivery==='not_configured'?'Email delivery is not configured yet. Ask the site administrator to finish email setup.':'The email provider could not send the code. Please try again later.');});
  const submitVerify=()=>run(async()=>{const d=await auth('verify',{email,code,product:'raneddie'});accept(d);setMode('dashboard');setTab('overview');setNotice('Your RanEddie ID is verified. Welcome aboard.');});
- const submitLogin=()=>run(async()=>{const d=await auth('login',{identifier:email,password,product:'raneddie'});accept(d);setMode('dashboard');setTab('overview');setNotice('You are signed in.');});
+ const submitLogin=()=>run(async()=>{const d=await auth('login',{identifier:email,password,product:'raneddie'});accept(d);if(returnTo){if(!codeChallenge)throw new Error('Missing PKCE challenge from the requesting product.');const next=await auth('authorize',{return_to:returnTo,product,code_challenge:codeChallenge,state:oauthState},d.token);window.location.assign(next.redirect!);return;}setMode('dashboard');setTab('overview');setNotice('You are signed in.');});
  const saveProfile=()=>run(async()=>{const d=await auth('profile',{full_name:fullName,avatar_url:user?.avatar_url||null},token);accept(d);setNotice('Your profile was saved to Supabase.');});
  const logout=()=>run(async()=>{await auth('logout',{},token);localStorage.removeItem('raneddie_id_token');setToken('');setUser(null);setCard(null);setSession(null);setMode('signin');setNotice('You have been signed out.');});
- const continueOAuth=async()=>{if(!returnTo)return;const verifier=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,'0')).join('');const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(verifier));const challenge=btoa(String.fromCharCode(...new Uint8Array(digest))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');sessionStorage.setItem('raneddie_pkce_verifier',verifier);const d=await auth('authorize',{return_to:returnTo,product,code_challenge:challenge,state:oauthState},token);window.location.assign(d.redirect!);};
+ 
  const copyId=async()=>{if(!user)return;await navigator.clipboard.writeText(user.raneddie_id);setCopied(true);window.setTimeout(()=>setCopied(false),1600);};
  const memberSince=useMemo(()=>user?.created_at?new Date(user.created_at).toLocaleDateString(undefined,{month:'long',year:'numeric'}):'—',[user]);
  if(!open)return null;
