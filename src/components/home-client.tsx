@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
 import type { SiteContent } from '@/lib/content';
 import { SiteFooter, SiteHeader, Logo } from '@/components/site-chrome';
 import { CardVisual, HeroVisual } from '@/components/visuals';
+import { Reveal } from '@/components/reveal';
 
 export default function HomeClient({ content }: { content: SiteContent }) {
   const { slides } = content;
@@ -70,14 +71,15 @@ export default function HomeClient({ content }: { content: SiteContent }) {
         </div>
       )}
       <section className="products-section" id="products">
-        <div className="section-title">
+        <Reveal className="section-title">
           <span>{content.productsSection.eyebrow}</span>
           <h2>{content.productsSection.title}</h2>
           <p>{content.productsSection.subtitle}</p>
-        </div>
+        </Reveal>
         <div className="product-row">
           {homeProducts.map((p, i) => (
-            <a key={p.slug} className={`product-card ${p.visual === 'fizz' ? 'fizz-card' : 'snake-card'}`} href={`/${p.slug}`}>
+            <Reveal key={p.slug} delay={(i % 2) * 0.08}>
+            <a className={`product-card ${p.visual === 'fizz' ? 'fizz-card' : 'snake-card'}`} href={`/${p.slug}`}>
               <div>
                 <small>{String(i + 1).padStart(2, '0')} / {p.category}</small>
                 <h3>{p.name}</h3>
@@ -86,33 +88,17 @@ export default function HomeClient({ content }: { content: SiteContent }) {
               </div>
               <CardVisual visual={p.visual} image={p.image} alt={p.name} />
             </a>
+            </Reveal>
           ))}
         </div>
       </section>
-      {content.lab.length > 0 && (
-        <section className="lab-section" id="lab">
-          <div className="section-title">
-            <span>{content.labSection.eyebrow}</span>
-            <h2>{content.labSection.title}</h2>
-          </div>
-          <div className="lab-row">
-            {content.lab.map((l) => (
-              <article key={l.id}>
-                <small>{l.meta}</small>
-                <h3>{l.title}</h3>
-                <p>{l.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
       <section className="studio-section" id="studio">
-        <div className="studio-logo"><Logo src={content.site.logo} /></div>
-        <div>
+        <Reveal className="studio-logo"><Logo src={content.site.logo} /></Reveal>
+        <Reveal delay={0.1}>
           <span>{content.studio.eyebrow}</span>
           <h2>{content.studio.title}</h2>
           <p>{content.studio.text}</p>
-        </div>
+        </Reveal>
       </section>
       <SiteFooter content={content} />
     </main>

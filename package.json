@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.14",
+    "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.8.2",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.468.0",

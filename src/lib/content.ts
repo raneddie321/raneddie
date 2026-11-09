@@ -78,7 +78,11 @@ export type SiteContent = {
 import catalogue from '@/data/products.json';
 
 /** Bump when defaults gain items that older saves should pick up (see withDefaults). */
-export const CONTENT_SCHEMA = 2;
+export const CONTENT_SCHEMA = 3;
+
+/** The RanEddie logo shipped with the site (the old one was hot-linked from an image host). */
+export const DEFAULT_LOGO = '/images/raneddie-mark.png';
+const OLD_LOGO = 'https://i.ibb.co/spvRBsHC/Chat-GPT-Image-Mar-23-2026-06-23-40-PM-removebg-preview-1-1.png';
 
 export const FIZZ_URL = 'https://fizzbrowser.vercel.app/';
 export const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.snakebrawl.raneddie';
@@ -86,10 +90,10 @@ export const RANEDDIE_ID_URL = 'https://id.raneddie.com';
 
 export const DEFAULT_CONTENT: SiteContent = {
   site: {
-    logo: 'https://i.ibb.co/spvRBsHC/Chat-GPT-Image-Mar-23-2026-06-23-40-PM-removebg-preview-1-1.png',
+    logo: DEFAULT_LOGO,
     title: 'RanEddie — Building the Future of Play & Productivity',
     description: 'Discover products by RanEddie: Fizz Browser, Snake Brawl and what comes next.',
-    navCta: { label: 'Get Fizz', href: FIZZ_URL },
+    navCta: { label: 'Get started', href: '/#products' },
     contactEmail: 'contact@raneddie.com',
     footerText: '© 2026 RanEddie Studio. All rights reserved.',
   },
@@ -150,7 +154,15 @@ export function withDefaults(saved: Partial<SiteContent> | null | undefined): Si
   if (!saved || typeof saved !== 'object') return DEFAULT_CONTENT;
   const d = DEFAULT_CONTENT;
   return {
-    site: { ...d.site, ...(saved.site ?? {}) },
+    site: (() => {
+      const site = { ...d.site, ...(saved.site ?? {}) };
+      // Schema 3: local logo instead of the hot-linked image, and a company-wide top button.
+      if ((saved.schema ?? 1) < 3) {
+        if (site.logo === OLD_LOGO) site.logo = DEFAULT_LOGO;
+        if (site.navCta?.label === 'Get Fizz') site.navCta = d.site.navCta;
+      }
+      return site;
+    })(),
     slides: Array.isArray(saved.slides) && saved.slides.length ? saved.slides.map((s) => ({ ...d.slides[0], ...s, cta: { ...d.slides[0].cta, ...(s?.cta ?? {}) } })) : d.slides,
     productsSection: { ...d.productsSection, ...(saved.productsSection ?? {}) },
     products: (() => {
@@ -192,4 +204,4 @@ export function slugify(s: string) {
 }
 
 /** Paths a product slug may not use, because the site already has pages there. */
-export const RESERVED_SLUGS = new Set(['docs', 'api', 'images', '_next', 're-admin-internal', 'admin', 'sign-in', 'sign-up', 'account']);
+export const RESERVED_SLUGS = new Set(['privacy', 'terms', 'contact', 'sitemap.xml', 'robots.txt', 'opengraph-image', 'docs', 'api', 'images', '_next', 're-admin-internal', 'admin', 'sign-in', 'sign-up', 'account']);

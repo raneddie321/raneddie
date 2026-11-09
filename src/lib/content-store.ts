@@ -138,3 +138,46 @@ export async function listImages() {
     .map((b) => ({ url: b.url, size: b.size, uploadedAt: new Date(b.uploadedAt).getTime() }))
     .sort((a, b) => b.uploadedAt - a.uploadedAt);
 }
+
+// ---------------------------------------------------------------- contact messages
+export type ContactMessage = { id: string; at: number; name: string; email: string; topic: string; message: string };
+
+export async function saveMessage(m: Omit<ContactMessage, 'id' | 'at'>) {
+  const at = Date.now();
+  const id = `${at}-${Math.random().toString(36).slice(2, 8)}`;
+  const body = JSON.stringify({ id, at, ...m });
+  if (useLocal()) {
+    const dir = path.join(LOCAL_DIR, 'messages');
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(path.join(dir, `${id}.json`), body);
+    return id;
+  }
+  if (!hasBlob()) throw new Error('Storage is not connected.');
+  // Random suffix keeps message URLs unguessable.
+  await put(`messages/${id}.json`, body, { access: 'public', contentType: 'application/json', addRandomSuffix: true });
+  return id;
+}
+
+export async function listMessages(): Promise<(ContactMessage & { ref: string })[]> {
+  if (useLocal()) {
+    const dir = path.join(LOCAL_DIR, 'messages');
+    const files = await fs.readdir(dir).catch(() => [] as string[]);
+    const out = await Promise.all(files.map(async (f) => ({ ...JSON.parse(await fs.readFile(path.join(dir, f), 'utf8')), ref: path.join(dir, f) })));
+    return out.sort((a, b) => b.at - a.at);
+  }
+  if (!hasBlob()) return [];
+  const page = await list({ prefix: 'messages/', limit: 500 });
+  const out = await Promise.all(
+    page.blobs.map(async (b) => {
+      const res = await fetch(b.url, { cache: 'no-store' });
+      return res.ok ? { ...((await res.json()) as ContactMessage), ref: b.url } : null;
+    }),
+  );
+  return out.filter((m): m is ContactMessage & { ref: string } => !!m).sort((a, b) => b.at - a.at);
+}
+
+export async function deleteMessage(ref: string) {
+  if (useLocal()) return fs.unlink(ref).catch(() => undefined);
+  if (!ref.includes('/messages/')) throw new Error('Not a message.');
+  await del(ref);
+}
