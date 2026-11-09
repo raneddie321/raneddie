@@ -5,7 +5,7 @@ import { useClerk, useUser } from "@clerk/nextjs";
 import { UserRound } from "lucide-react";
 
 /** RanEddie ID lives on its own subdomain; every account action goes there. */
-const RANEDDIE_ID_URL = "https://accounts.raneddie.com";
+const RANEDDIE_ID_URL = "https://id.raneddie.com";
 const SITE_URL = "https://raneddie.com";
 
 function signInUrl(returnTo: string) {
