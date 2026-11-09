@@ -16,7 +16,9 @@ function ConnectedAccountMenu() {
   const { signOut } = useClerk();
   const [open, setOpen] = useState(false);
 
-  if (!isLoaded) return <span className="account-nav-loading" aria-label="Loading account" />;
+  // Keep authentication accessible if Clerk is slow to initialize.
+  // Once Clerk loads, a signed-in user is automatically shown their account menu.
+  if (!isLoaded) return <SignInLink />;
   if (!isSignedIn || !user) return <SignInLink />;
 
   return (
