@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getContent } from '@/lib/content-store';
+import { allDocs, sections } from '@/lib/docs';
 import { renderMarkdown } from '@/lib/markdown';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { DocsSidebar } from '@/components/docs-nav';
@@ -10,35 +11,47 @@ export const revalidate = 600;
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Pre-render the most-visited pages at build time; the rest render on first visit and are cached.
 export async function generateStaticParams() {
-  return (await getContent()).docs.map((d) => ({ slug: d.slug }));
+  return allDocs(await getContent())
+    .slice(0, 60)
+    .map((d) => ({ slug: d.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const doc = (await getContent()).docs.find((d) => d.slug === slug);
+  const doc = allDocs(await getContent()).find((d) => d.slug === slug);
   return doc ? { title: `${doc.title} — Docs`, description: doc.description } : {};
 }
 
 export default async function DocPage({ params }: Props) {
   const { slug } = await params;
   const content = await getContent();
-  const index = content.docs.findIndex((d) => d.slug === slug);
-  if (index < 0) notFound();
-  const doc = content.docs[index];
+  const docs = allDocs(content);
+  const doc = docs.find((d) => d.slug === slug);
+  if (!doc) notFound();
+
+  const all = sections(docs);
+  const current = all.find((s) => s.name === doc.section)!;
+  const i = current.items.findIndex((d) => d.slug === doc.slug);
+  const prev = current.items[i - 1];
+  const next = current.items[i + 1];
   const { html, toc } = renderMarkdown(doc.body);
-  const links = content.docs.map(({ slug, section, title, description }) => ({ slug, section, title, description }));
-  const prev = content.docs[index - 1];
-  const next = content.docs[index + 1];
+  const sectionLinks = all.map((s) => ({ name: s.name, slug: s.slug, count: s.items.length }));
 
   return (
     <main className="site docs-site" dir="ltr">
       <SiteHeader site={content.site} />
       <div className="docs-layout">
-        <DocsSidebar docs={links} active={doc.slug} />
+        <DocsSidebar
+          section={{ name: current.name, slug: current.slug, count: current.items.length }}
+          items={current.items.map((d) => ({ slug: d.slug, title: d.title }))}
+          sections={sectionLinks}
+          active={doc.slug}
+        />
         <article className="docs-article">
           <nav className="crumbs" aria-label="Breadcrumb">
-            <a href="/docs">Docs</a> <span>/</span> <span>{doc.section}</span> <span>/</span> <b>{doc.title}</b>
+            <a href="/docs">Docs</a> <span>/</span> <a href={`/docs/topics/${current.slug}`}>{doc.section}</a> <span>/</span> <b>{doc.title}</b>
           </nav>
           <h1>{doc.title}</h1>
           {doc.description && <p className="docs-lead">{doc.description}</p>}
@@ -70,7 +83,7 @@ export default async function DocPage({ params }: Props) {
           </aside>
         )}
       </div>
-      <SiteFooter content={content} />
+      <SiteFooter content={{ ...content, docs: [] }} />
     </main>
   );
 }

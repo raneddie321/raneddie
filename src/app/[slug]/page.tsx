@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { ArrowUpRight, BookOpen, Check } from 'lucide-react';
 import { getContent } from '@/lib/content-store';
 import { renderMarkdown } from '@/lib/markdown';
+import { allDocs } from '@/lib/docs';
+import { slugify } from '@/lib/content';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { CardVisual, HeroVisual } from '@/components/visuals';
 
@@ -34,9 +36,8 @@ export default async function ProductPage({ params }: Props) {
 
   const { html } = renderMarkdown(product.body);
   const others = content.products.filter((p) => p.slug !== product.slug);
-  const relatedDocs = content.docs.filter(
-    (d) => d.section.toLowerCase() === product.name.toLowerCase() || d.slug.startsWith(product.slug),
-  );
+  const productDocs = allDocs(content).filter((d) => d.section.toLowerCase() === product.name.toLowerCase());
+  const relatedDocs = productDocs.slice(0, 6);
 
   return (
     <main className="site" dir="ltr">
@@ -120,6 +121,11 @@ export default async function ProductPage({ params }: Props) {
           <div className="section-title">
             <span>DOCS</span>
             <h2>Learn more</h2>
+            {productDocs.length > relatedDocs.length && (
+              <p>
+                <a className="text-link" href={`/docs/topics/${slugify(product.name)}`}>All {productDocs.length} {product.name} articles →</a>
+              </p>
+            )}
           </div>
           <div className="doc-cards">
             {relatedDocs.map((d) => (
@@ -155,7 +161,7 @@ export default async function ProductPage({ params }: Props) {
         </section>
       )}
 
-      <SiteFooter content={content} />
+      <SiteFooter content={{ ...content, docs: [] }} />
     </main>
   );
 }

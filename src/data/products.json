@@ -1,0 +1,763 @@
+[
+ {
+  "slug": "fizz",
+  "name": "Fizz Browser",
+  "category": "BROWSER",
+  "tagline": "The browser that rewards you.",
+  "summary": "A fresh way to explore the web — a faster, more personal browsing experience with rewards built into the journey.",
+  "body": "Fizz is RanEddie's take on what a browser should feel like today: quick to open, calm to look at and personal from the first tab.\n\n## Built around you\nFizz keeps the things you use most one tap away, so getting where you want to go takes less effort.\n\n## Rewards in the journey\nRewards are part of the experience rather than an add-on — explore the web the way you normally would.\n\n## Your RanEddie ID\nSign in with the same RanEddie ID you use across RanEddie products.",
+  "visual": "fizz",
+  "image": "",
+  "primaryCta": {
+   "label": "Get Fizz",
+   "href": "https://fizzbrowser.vercel.app/"
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/fizz-overview"
+  },
+  "features": [
+   {
+    "title": "Fast by default",
+    "text": "A lightweight experience that gets out of the way."
+   },
+   {
+    "title": "Rewards built in",
+    "text": "Explore the web and get more back along the way."
+   },
+   {
+    "title": "Personal",
+    "text": "Make Fizz yours with the things you use most."
+   }
+  ],
+  "platforms": [
+   "Web"
+  ],
+  "status": "available",
+  "showOnHome": true
+ },
+ {
+  "slug": "snake-brawl",
+  "name": "Snake Brawl",
+  "category": "GAME",
+  "tagline": "Nostalgia meets competition.",
+  "summary": "Classic Snake meets arena combat. Grow, shoot, charge your Super and be the last snake standing while the poison closes in.",
+  "body": "Snake Brawl takes the game everyone knows and drops it into an arena. Eat orbs to grow, carry a weapon, charge your **Super**, hide in bushes and be the last snake standing while the poison closes in.\n\n## Three ways to play\n- **Showdown** — ten snakes, no respawns, and a poison cloud that closes in. Last snake standing wins.\n- **Endless** — the classic grow-as-big-as-you-can mode on a bigger map.\n- **Duo Showdown** — team up with your club's duo partner against four other pairs.\n\n## Twelve brawlers\nFrom Viper's venom pellets to Nova's meteor rain, every brawler has its own attack and Super. Unlock new brawlers in the shop and upgrade them from power level 1 to 7.\n\n## Play with a friend\n**Friends** mode connects two Android phones on the same Wi-Fi network — choose Together, Versus, Snake Ball or Egg Heist.\n\n## Snake Pass\nA 30-tier season pass with free and Snake Pass+ rewards — coins, boxes, skins and brawlers.\n\n## Safe for younger players\nPlayers under 13 get a generated nickname and can't buy coins with real money.",
+  "visual": "snake",
+  "image": "/images/snake-brawl-art.svg",
+  "primaryCta": {
+   "label": "Get it on Google Play",
+   "href": "https://play.google.com/store/apps/details?id=com.snakebrawl.raneddie"
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/snake-brawl-overview"
+  },
+  "features": [
+   {
+    "title": "Arena combat",
+    "text": "Shoot, charge your Super and outplay nine other snakes."
+   },
+   {
+    "title": "12 brawlers",
+    "text": "Every brawler has its own attack, Super and upgrade path."
+   },
+   {
+    "title": "Play with a friend",
+    "text": "Two phones on the same Wi-Fi: Together, Versus, Snake Ball or Egg Heist."
+   },
+   {
+    "title": "Snake Pass",
+    "text": "A 30-tier season with free and Pass+ rewards."
+   }
+  ],
+  "platforms": [
+   "Android"
+  ],
+  "status": "available",
+  "showOnHome": true
+ },
+ {
+  "slug": "bluebear-media",
+  "name": "BlueBear Media",
+  "category": "ENTERTAINMENT",
+  "tagline": "Stories for every screen, and places to live them.",
+  "summary": "BlueBear Media is RanEddie's entertainment company — film, television, streaming, animation, music and theme parks under one roof.",
+  "body": "BlueBear Media brings RanEddie's storytelling together: the films you see in cinemas, the series you stream at home, the music you hear in them and the parks where you can step inside them.\n\n## BlueBear Pictures\nThe film studio. BlueBear Pictures develops, produces and releases feature films — from big-screen adventures and family animation to smaller character-driven stories — and takes them from first draft to premiere.\n\n## BlueBear TV\nThe television group. BlueBear TV produces scripted series, unscripted shows, live events and kids' programming, and runs BlueBear's linear channels.\n\n## BlueBear Stream\nThe streaming service. Watch BlueBear films and series on phones, tablets, TVs and streamers, with profiles for everyone in the household, downloads for offline viewing and a kids' space with its own controls.\n\n## BlueBear Animation\nFeature films, series and shorts made by BlueBear's animation studio, for young audiences and grown-ups alike.\n\n## BlueBear Music\nOriginal scores and soundtracks, plus a label for artists whose music starts on screen and keeps going.\n\n## BlueBear Parks & Resorts\nTheme parks, water parks and resort hotels where BlueBear stories become rides, shows, food and places to stay.\n\n## BlueBear Studio Tours\nWalk the backlots and sound stages, see how scenes are built and visit the departments that make them.\n\n## BlueBear Consumer Products\nToys, apparel, books and collectibles inspired by BlueBear films and series.\n\n## Made with RanEddie tools\nBlueBear productions use EditTime for editing and post-production, Cloudly for storage and delivery, and RanEddie ID for one account across BlueBear Stream, park tickets and the BlueBear shop.",
+  "visual": "image",
+  "image": "/images/products/bluebear-media.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/bluebear-media-overview"
+  },
+  "features": [
+   {
+    "title": "BlueBear Pictures",
+    "text": "Feature films from first draft to premiere."
+   },
+   {
+    "title": "BlueBear TV",
+    "text": "Series, live events, kids' programming and channels."
+   },
+   {
+    "title": "BlueBear Stream",
+    "text": "Films and series on every screen, with profiles and downloads."
+   },
+   {
+    "title": "BlueBear Parks & Resorts",
+    "text": "Rides, shows and hotels inspired by BlueBear stories."
+   },
+   {
+    "title": "BlueBear Animation & Music",
+    "text": "Animated films and series, original scores and soundtracks."
+   },
+   {
+    "title": "Studio Tours & Products",
+    "text": "Behind-the-scenes tours, toys, books and collectibles."
+   }
+  ],
+  "platforms": [
+   "Cinemas",
+   "TV",
+   "Streaming",
+   "Parks"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "lu",
+  "name": "Lu",
+  "category": "DEVICES",
+  "tagline": "Every device, one Lu.",
+  "summary": "Lu is RanEddie's family of devices — phone, tablet, watch, earbuds, streamer, laptop and home speaker — designed to work as one.",
+  "body": "Lu is a family of devices that know about each other. Start something on your phone and finish it on your tablet, answer a call on your watch, and move music from your earbuds to the speaker in the kitchen — all with one RanEddie ID.\n\n## Lu Phone\nThe centre of Lu: a bright display, an all-day battery, a camera system tuned for real life, and Lu OS keeping your apps, photos and messages in sync.\n\n## Lu Tab\nA thin, light tablet for watching, drawing, reading and working — with keyboard and pen accessories when you need them.\n\n## Lu Watch\nNotifications, calls, workouts, heart-rate and sleep tracking, and payments from your wrist.\n\n## Lu Buds\nWireless earbuds with active noise cancellation, a transparency mode and automatic switching between your Lu devices.\n\n## Lu Stream\nA small box that turns any TV into a smart TV, with BlueBear Stream, RanEddie Games streaming and your Lu photos on the big screen.\n\n## Lu Book\nA laptop for work and study, with workIT built in and Lu Link to your phone.\n\n## Lu Home\nA home speaker with room-filling sound that controls your smart home and plays across rooms.\n\n## Lu Link\nLu Link connects your devices: copy on one and paste on another, hand off a call, share Wi-Fi passwords, unlock your Lu Book with your Lu Watch and find any device that goes missing.\n\n## Built to last\nLu devices get software updates for years, and RanEddie Part offers genuine parts, repairs and trade-in when you're ready for something new.",
+  "visual": "image",
+  "image": "/images/products/lu.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/lu-overview"
+  },
+  "features": [
+   {
+    "title": "Lu Phone & Lu Tab",
+    "text": "Bright displays, all-day battery and Lu OS on every screen."
+   },
+   {
+    "title": "Lu Watch",
+    "text": "Calls, health tracking, workouts and payments on your wrist."
+   },
+   {
+    "title": "Lu Buds",
+    "text": "Noise cancellation and automatic switching between devices."
+   },
+   {
+    "title": "Lu Stream & Lu Home",
+    "text": "A smarter TV and room-filling sound for the whole home."
+   },
+   {
+    "title": "Lu Book",
+    "text": "A laptop with workIT built in and Lu Link to your phone."
+   },
+   {
+    "title": "Lu Link",
+    "text": "Copy, paste, hand off calls and find devices across Lu."
+   }
+  ],
+  "platforms": [
+   "Lu Phone",
+   "Lu Tab",
+   "Lu Watch",
+   "Lu Buds",
+   "Lu Stream",
+   "Lu Book",
+   "Lu Home"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "raneddie-part",
+  "name": "RanEddie Part",
+  "category": "REPAIR & PARTS",
+  "tagline": "Keep it working. Keep it yours.",
+  "summary": "RanEddie Part is where RanEddie hardware gets a longer life — genuine parts, repairs, accessories, protection plans, trade-in and recycling.",
+  "body": "Every Lu device, RanEddie Core console and Gimbly camera is built to be repaired. RanEddie Part is the home for everything that keeps them going.\n\n## Genuine parts\nBatteries, screens, cameras, charging ports, controllers and more — the same parts used in RanEddie repair centres, each matched to your device's serial number.\n\n## Repairs your way\nBook a repair at a RanEddie Part centre, send your device by mail, or fix it yourself with a self-repair kit and step-by-step guides.\n\n## Self-repair kits\nKits include the part, the right tools and a guide written for your exact model. Return the old part in the prepaid box and it's recycled.\n\n## Part Care\nProtection plans that cover accidental damage, battery service and express replacements for Lu devices, RanEddie Core and Gimbly.\n\n## Accessories\nCases, chargers, cables, bands, controllers and docks designed for RanEddie hardware.\n\n## Trade-in and recycling\nTrade in your old device for credit, or recycle it for free. Every device is checked, wiped securely and either refurbished or recycled responsibly.\n\n## Certified refurbished\nRefurbished RanEddie devices with a new battery, genuine parts and a full warranty.",
+  "visual": "image",
+  "image": "/images/products/raneddie-part.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/raneddie-part-overview"
+  },
+  "features": [
+   {
+    "title": "Genuine parts",
+    "text": "Batteries, screens, cameras and ports matched to your device."
+   },
+   {
+    "title": "Repair centres & mail-in",
+    "text": "Book a visit or send your device in."
+   },
+   {
+    "title": "Self-repair kits",
+    "text": "The part, the tools and a guide for your exact model."
+   },
+   {
+    "title": "Part Care",
+    "text": "Accidental damage cover and express replacements."
+   },
+   {
+    "title": "Trade-in & recycling",
+    "text": "Credit for your old device, or free recycling."
+   },
+   {
+    "title": "Certified refurbished",
+    "text": "Like-new devices with a full warranty."
+   }
+  ],
+  "platforms": [
+   "Repair centres",
+   "Mail-in",
+   "Online store"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "skypear",
+  "name": "SkyPear",
+  "category": "FOOD",
+  "tagline": "Pizza, reimagined from the base up.",
+  "summary": "SkyPear is a fast-food restaurant chain known for its signature pizzas on crispy tortilla or fresh dough, hot dogs, loaded fries, wraps, shakes and more.",
+  "body": "SkyPear started with one question: what if the base were the best part of the pizza? Today SkyPear restaurants serve pizzas on two very different foundations — and a full menu around them.\n\n## Two kinds of pizza\n- **Tortilla pizzas** — a thin, crisp tortilla base that bakes in minutes, with toppings piled edge to edge.\n- **Dough pizzas** — fresh dough, proofed in the restaurant every day and baked until the crust is golden and airy.\n\nEvery pizza comes in classic and SkyPear originals, and you can build your own from the topping bar.\n\n## Hot dogs\nGrilled hot dogs in toasted buns with SkyPear's own sauces and crunchy toppings — plus vegetarian sausages.\n\n## Beyond pizza\nLoaded fries, wraps, salads, wings, shakes, fresh juices and desserts — including the Pear Crumble the brand is named after.\n\n## Order your way\nEat in, take away, drive through, or order ahead in the SkyPear app and skip the queue. Delivery is available from many restaurants.\n\n## Pear Points\nEarn Pear Points with every order in the app and swap them for free food.\n\n## Know what you eat\nAllergen and nutrition information for every item is in the app and in every restaurant. Ask the team if you have an allergy — they'll help you choose.",
+  "visual": "image",
+  "image": "/images/products/skypear.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/skypear-overview"
+  },
+  "features": [
+   {
+    "title": "Tortilla & dough pizzas",
+    "text": "A crisp tortilla base or fresh dough baked daily."
+   },
+   {
+    "title": "Hot dogs",
+    "text": "Grilled, loaded and served with SkyPear sauces."
+   },
+   {
+    "title": "Fries, wraps & shakes",
+    "text": "A full menu around the pizza."
+   },
+   {
+    "title": "Order ahead",
+    "text": "Skip the queue with the SkyPear app."
+   },
+   {
+    "title": "Delivery",
+    "text": "From many SkyPear restaurants to your door."
+   },
+   {
+    "title": "Pear Points",
+    "text": "Earn points on every order and get free food."
+   }
+  ],
+  "platforms": [
+   "Restaurants",
+   "SkyPear app",
+   "Delivery"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "workit",
+  "name": "workIT",
+  "category": "PRODUCTIVITY",
+  "tagline": "Do your best work, together.",
+  "summary": "workIT is RanEddie's productivity suite — documents, spreadsheets, presentations, notes, forms and meetings that work together, with workIT Assist built in.",
+  "body": "workIT brings together the apps you use to write, calculate, present and meet — on the web, on your computer and on your phone — with files saved to Cloudly and shared in a click.\n\n## workIT Write\nA word processor for everything from a one-page letter to a 300-page report: styles, tables, comments, suggestions, version history and export to common formats.\n\n## workIT Sheets\nSpreadsheets with formulas, pivot tables, charts, filters and live collaboration — from a household budget to a company forecast.\n\n## workIT Slides\nPresentations with themes, animations, presenter view and live captions when you present.\n\n## workIT Notes\nNotebooks for ideas, meeting notes and to-dos, with handwriting on Lu Tab.\n\n## workIT Forms\nSurveys, quizzes and sign-up forms with responses collected straight into workIT Sheets.\n\n## workIT Meet\nVideo meetings with screen sharing, chat, recordings and transcripts.\n\n## workIT Assist\nAn AI assistant inside every workIT app. Ask it to draft a document, summarise a long thread, build a formula, turn notes into slides or recap a meeting — and review what it suggests before you use it.\n\n## Work together\nShare a file with a link, edit at the same time, leave comments and see who changed what. Everything saves automatically to Cloudly.",
+  "visual": "image",
+  "image": "/images/products/workit.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/workit-overview"
+  },
+  "features": [
+   {
+    "title": "Write, Sheets & Slides",
+    "text": "Documents, spreadsheets and presentations that work together."
+   },
+   {
+    "title": "Notes & Forms",
+    "text": "Notebooks, surveys and quizzes with live responses."
+   },
+   {
+    "title": "workIT Meet",
+    "text": "Video meetings with recordings and transcripts."
+   },
+   {
+    "title": "workIT Assist",
+    "text": "An AI assistant in every app."
+   },
+   {
+    "title": "Real-time collaboration",
+    "text": "Edit together, comment and track changes."
+   },
+   {
+    "title": "Saved to Cloudly",
+    "text": "Every change saved automatically and available everywhere."
+   }
+  ],
+  "platforms": [
+   "Web",
+   "Windows",
+   "macOS",
+   "Lu Book",
+   "Lu Tab",
+   "Phones"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "edittime",
+  "name": "EditTime",
+  "category": "VIDEO",
+  "tagline": "Edit at the speed of the story.",
+  "summary": "EditTime is a complete video editor with AI built into every step — from first assembly to final colour, sound and delivery — built for professional film and television productions and creators alike.",
+  "body": "EditTime is a full post-production studio in one app: edit, colour, sound, effects and delivery on a single timeline, with AI that takes on the repetitive work so editors can focus on the story.\n\n## A timeline built for long-form work\nMulti-track editing, multicam, nested sequences, trimming tools and keyboard-driven workflows that hold up across feature-length projects.\n\n## AI that edits with you\n- **Scene detection** finds every cut in existing footage.\n- **Transcript editing** lets you cut interviews by editing the words.\n- **Smart reframe** keeps the subject centred when you change aspect ratio.\n- **Auto-captions** in many languages, ready to style.\n- **Voice cleanup** removes background noise and room echo.\n- **Rough cut assistant** builds a first assembly from your script and selects.\n\n## Colour\nNode-based grading, HDR scopes, LUT support and AI shot matching so every angle looks like it belongs.\n\n## Sound\nMixing, effects and loudness meters to match broadcast and streaming delivery specs.\n\n## Effects and titles\nKeying, tracking, stabilisation, motion graphics and titles without leaving the timeline.\n\n## Collaboration at production scale\nProjects live in Cloudly, so editors, assistants, colourists and producers can work on the same project with locking, comments and review links.\n\n## Proxy and camera workflows\nWork smoothly with high-resolution camera formats through automatic proxies, then relink to originals for delivery.\n\n## Deliver anywhere\nExport presets for cinema, broadcast, streaming platforms and social — or send straight to BlueBear Stream review.",
+  "visual": "image",
+  "image": "/images/products/edittime.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/edittime-overview"
+  },
+  "features": [
+   {
+    "title": "Professional timeline",
+    "text": "Multicam, nested sequences and keyboard-driven editing."
+   },
+   {
+    "title": "AI editing tools",
+    "text": "Scene detection, transcript editing, smart reframe and rough cuts."
+   },
+   {
+    "title": "Colour & sound",
+    "text": "Node-based grading, HDR scopes and broadcast-ready mixing."
+   },
+   {
+    "title": "Effects & titles",
+    "text": "Keying, tracking, stabilisation and motion graphics."
+   },
+   {
+    "title": "Team collaboration",
+    "text": "Shared projects in Cloudly with review links."
+   },
+   {
+    "title": "Deliver anywhere",
+    "text": "Presets for cinema, broadcast, streaming and social."
+   }
+  ],
+  "platforms": [
+   "Windows",
+   "macOS",
+   "Lu Book",
+   "Lu Tab"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "raneddie-games",
+  "name": "RanEddie Games",
+  "category": "GAMES",
+  "tagline": "More than 50 games. One console made for them.",
+  "summary": "RanEddie Games is RanEddie's game studio and publisher — more than 50 games, made to shine on RanEddie Core, its own console.",
+  "body": "RanEddie Games makes games — more than 50 of them, from quick arcade rounds to long adventures — and the console built to play them.\n\n## RanEddie Core\nRanEddie Core is the RanEddie Games console: designed around its own controller, fast loading and a library that's ready the moment you sign in with your RanEddie ID.\n\n## The Core Controller\nComfortable grips, responsive triggers, a touch strip and adaptive rumble, with a battery that lasts for days.\n\n## More than 50 games\nAction, racing, puzzle, sports, party games and family adventures — including **Snake Brawl** — with new games added regularly.\n\n## Core Pass\nOne subscription for the full library on day one, online play, cloud saves and member discounts.\n\n## Play together\nOnline multiplayer, parties with voice chat, and couch co-op with up to four controllers.\n\n## Your progress, everywhere\nCloud saves follow your RanEddie ID, so you can pick up on another Core or stream to Lu devices.\n\n## Families\nFamily settings for play time, spending limits, age ratings and who kids can play with.",
+  "visual": "image",
+  "image": "/images/products/raneddie-games.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/raneddie-games-overview"
+  },
+  "features": [
+   {
+    "title": "RanEddie Core",
+    "text": "A console built for RanEddie games."
+   },
+   {
+    "title": "50+ games",
+    "text": "Action, racing, puzzle, sports and family adventures."
+   },
+   {
+    "title": "Core Pass",
+    "text": "The full library, online play and cloud saves."
+   },
+   {
+    "title": "Core Controller",
+    "text": "Adaptive rumble, touch strip and days of battery."
+   },
+   {
+    "title": "Play together",
+    "text": "Online multiplayer, parties and couch co-op."
+   },
+   {
+    "title": "Family settings",
+    "text": "Play time, spending and age-rating controls."
+   }
+  ],
+  "platforms": [
+   "RanEddie Core",
+   "Android",
+   "Lu devices",
+   "Streaming"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "gimbly",
+  "name": "Gimbly",
+  "category": "CAMERA",
+  "tagline": "The camera that flies itself.",
+  "summary": "Gimbly is a pocket-size flying camera with a built-in stabiliser and an AI director — it launches from your palm, follows the action, frames every shot and edits the story for you.",
+  "body": "Gimbly folds to the size of a phone, opens in your hand and lifts off from your palm. It's a flying camera with a three-axis stabiliser and an AI director that decides where to fly, how to frame the shot and when to roll.\n\n## Launch from your hand\nOpen Gimbly, hold it flat and it takes off on its own — no controller needed. Hold out your palm to land it.\n\n## An AI director on board\nTell Gimbly what you're doing — running, cycling, a family picnic, a product shot — and it chooses the moves: orbits, reveals, follows and slow pull-backs, keeping the subject perfectly framed.\n\n## Rock-steady footage\nA three-axis gimbal and electronic stabilisation keep footage smooth, even in wind or while following fast action.\n\n## Gestures and voice\nWave to start a shot, raise a hand for a photo, or say \"Gimbly, follow me\".\n\n## Indoor and outdoor\nObstacle sensing on every side lets Gimbly fly indoors and through trees, and slows it down near people.\n\n## Your story, edited\nWhen you land, Gimbly sends its clips to your phone and builds a short edit with music. Open it in EditTime to refine it.\n\n## Safe and responsible\nBuilt-in geofencing respects no-fly zones, propellers are fully guarded, and a privacy mode stops Gimbly from recording people who haven't been added to your shot.",
+  "visual": "image",
+  "image": "/images/products/gimbly.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/gimbly-overview"
+  },
+  "features": [
+   {
+    "title": "Palm launch & landing",
+    "text": "Takes off from your hand — no controller needed."
+   },
+   {
+    "title": "AI director",
+    "text": "Chooses the moves and keeps the subject framed."
+   },
+   {
+    "title": "3-axis gimbal",
+    "text": "Smooth footage, even in wind."
+   },
+   {
+    "title": "Gestures & voice",
+    "text": "Wave, raise a hand or just ask."
+   },
+   {
+    "title": "Obstacle sensing",
+    "text": "Flies safely indoors, outdoors and near people."
+   },
+   {
+    "title": "Auto-edit",
+    "text": "A finished clip on your phone, ready for EditTime."
+   }
+  ],
+  "platforms": [
+   "Gimbly",
+   "Lu Phone",
+   "EditTime"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "cloudly",
+  "name": "Cloudly",
+  "category": "CLOUD",
+  "tagline": "Your files and your apps, in the RanEddie cloud.",
+  "summary": "Cloudly is RanEddie's cloud — storage, sharing and backup for everyone, plus computing, hosting and storage infrastructure for developers and businesses.",
+  "body": "Cloudly is two clouds in one. For people, it's a safe place for files, photos and backups that you can reach from any device. For developers and businesses, it's the infrastructure to run apps and store data at any scale.\n\n## Cloudly Drive\nStore any file, organise it in folders, search it instantly and open it on any device. Share with a link and choose who can view or edit.\n\n## Cloudly Photos\nBack up photos and videos automatically from your phone, find them by what's in them, and share albums with family.\n\n## Cloudly Backup\nKeep a copy of your Lu devices, computers and workIT files, and restore them when you need to.\n\n## Cloudly for Business\nShared drives, admin controls, retention policies and audit logs for teams of every size.\n\n## Cloudly Compute\nVirtual servers and containers in regions around the world, with autoscaling and load balancing.\n\n## Cloudly Functions\nRun code in response to events without managing servers.\n\n## Cloudly Object Storage\nDurable storage for any amount of data, with lifecycle rules and a global content delivery network.\n\n## Built for developers\nAPIs, a command-line tool and SDKs for popular languages — and baseline for a ready-made backend on top of Cloudly.\n\n## Secure by default\nFiles are encrypted in transit and at rest, and two-step verification with your RanEddie ID protects your account.",
+  "visual": "image",
+  "image": "/images/products/cloudly.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/cloudly-overview"
+  },
+  "features": [
+   {
+    "title": "Cloudly Drive",
+    "text": "Store, search and share files from any device."
+   },
+   {
+    "title": "Cloudly Photos",
+    "text": "Automatic backup and search for your photos."
+   },
+   {
+    "title": "Cloudly Backup",
+    "text": "Restore your devices and computers when you need to."
+   },
+   {
+    "title": "Compute & Functions",
+    "text": "Servers, containers and event-driven code."
+   },
+   {
+    "title": "Object Storage & CDN",
+    "text": "Durable storage delivered worldwide."
+   },
+   {
+    "title": "Encrypted",
+    "text": "Encrypted in transit and at rest."
+   }
+  ],
+  "platforms": [
+   "Web",
+   "Windows",
+   "macOS",
+   "Lu devices",
+   "Android",
+   "API"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "raneddie-invest",
+  "name": "RanEddie Invest",
+  "category": "FINANCE",
+  "tagline": "Investing made clear.",
+  "summary": "RanEddie Invest is an investing app for buying and selling stocks and ETFs, building a long-term portfolio and following the markets — with clear fees and plain-language explanations.",
+  "body": "RanEddie Invest is built for people who want to invest without the jargon: open an account in minutes, buy stocks and ETFs, set up regular investing and always see exactly what you pay.\n\n## Stocks and ETFs\nBuy and sell shares and exchange-traded funds from major markets, including fractional shares so you can start with a small amount.\n\n## Recurring investments\nInvest a fixed amount every week or month automatically.\n\n## Clear fees\nEvery fee is shown before you confirm an order — no surprises.\n\n## Watchlists and alerts\nFollow the companies you care about and get alerts when prices move.\n\n## Learn as you go\nPlain-language explanations of every term, chart and order type, right where you need them.\n\n## Security\nSign in with your RanEddie ID and two-step verification; withdrawals only go to accounts in your name.\n\n## Important\nInvesting involves risk, including the possible loss of the money you invest. Past performance doesn't guarantee future results. RanEddie Invest doesn't provide personal financial advice. Availability depends on your country.",
+  "visual": "image",
+  "image": "/images/products/raneddie-invest.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/raneddie-invest-overview"
+  },
+  "features": [
+   {
+    "title": "Stocks & ETFs",
+    "text": "Including fractional shares from a small amount."
+   },
+   {
+    "title": "Recurring investing",
+    "text": "Invest automatically every week or month."
+   },
+   {
+    "title": "Clear fees",
+    "text": "See every fee before you confirm."
+   },
+   {
+    "title": "Watchlists & alerts",
+    "text": "Follow companies and price moves."
+   },
+   {
+    "title": "Learn as you go",
+    "text": "Plain-language explanations everywhere."
+   },
+   {
+    "title": "Secure",
+    "text": "RanEddie ID, two-step verification and protected withdrawals."
+   }
+  ],
+  "platforms": [
+   "Lu Phone",
+   "Android",
+   "Web"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "remail",
+  "name": "rEmail",
+  "category": "EMAIL",
+  "tagline": "Email that stays out of your way.",
+  "summary": "rEmail is RanEddie's email service — a clean inbox with strong spam protection, smart organisation, custom addresses and AI that helps you write and catch up.",
+  "body": "rEmail gives you an @remail address, or works with your own domain, with an inbox that sorts itself and keeps the noise out.\n\n## A calmer inbox\nrEmail sorts incoming mail into Primary, Updates, Promotions and Social, so the messages that matter are first.\n\n## Spam and phishing protection\nSuspicious messages are filtered before they reach you, and links and attachments are checked for threats with help from Protector Y.\n\n## Write faster\nSmart compose suggests the rest of your sentence, and rEmail Assist can draft a reply or rewrite a paragraph in a different tone. You always review before sending.\n\n## Catch up quickly\nSummaries of long threads, a daily digest and snooze to bring a message back when you're ready.\n\n## Your address, your way\nAliases to protect your real address, custom domains for your business, and filters that file mail automatically.\n\n## Schedule and undo\nSchedule messages for later, and undo a send for a few seconds after you press it.\n\n## Calendar and contacts\nInvitations, a calendar and your contacts, built in and synced to every device.\n\n## Private by design\nrEmail doesn't use the content of your email for advertising. Messages are encrypted in transit and at rest.",
+  "visual": "image",
+  "image": "/images/products/remail.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/remail-overview"
+  },
+  "features": [
+   {
+    "title": "Smart inbox",
+    "text": "Primary, Updates, Promotions and Social sorted for you."
+   },
+   {
+    "title": "Spam & phishing protection",
+    "text": "Threats filtered before they reach you."
+   },
+   {
+    "title": "rEmail Assist",
+    "text": "Draft replies, rewrite text and summarise threads."
+   },
+   {
+    "title": "Aliases & custom domains",
+    "text": "Protect your address or use your own domain."
+   },
+   {
+    "title": "Schedule & undo send",
+    "text": "Send later, or take it back."
+   },
+   {
+    "title": "Calendar & contacts",
+    "text": "Built in and synced everywhere."
+   }
+  ],
+  "platforms": [
+   "Web",
+   "Lu devices",
+   "Android",
+   "Windows",
+   "macOS"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "baseline",
+  "name": "baseline",
+  "category": "DEVELOPERS",
+  "tagline": "The backend you'd build, ready today.",
+  "summary": "baseline gives developers a complete backend in minutes — a Postgres database, authentication, file storage, realtime, edge functions and instant APIs — running on Cloudly.",
+  "body": "baseline is a backend platform for building web and mobile apps. Every project starts with a full Postgres database and adds everything an app needs around it — so you write your product, not plumbing.\n\n## Postgres database\nA dedicated Postgres database with extensions, a table editor, a SQL editor, backups and point-in-time recovery.\n\n## Instant APIs\nEvery table gets REST and GraphQL APIs automatically, with typed client libraries.\n\n## Authentication\nEmail, passwords, magic links, social sign-in and **Sign in with RanEddie ID**, with row-level security to control who can read and write each row.\n\n## Storage\nStore and serve files, with image transformations and the same security rules as your database.\n\n## Realtime\nListen to database changes, broadcast messages and track who's online.\n\n## Edge functions\nRun server-side code close to your users.\n\n## Branching\nCreate a branch of your project for every pull request, with its own database.\n\n## Built on Cloudly\nChoose a region, scale compute as you grow and keep your data where you need it.",
+  "visual": "image",
+  "image": "/images/products/baseline.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/baseline-overview"
+  },
+  "features": [
+   {
+    "title": "Postgres database",
+    "text": "Full Postgres with backups and point-in-time recovery."
+   },
+   {
+    "title": "Instant APIs",
+    "text": "REST and GraphQL for every table."
+   },
+   {
+    "title": "Auth & row-level security",
+    "text": "Including Sign in with RanEddie ID."
+   },
+   {
+    "title": "Storage",
+    "text": "Files with image transformations and access rules."
+   },
+   {
+    "title": "Realtime & edge functions",
+    "text": "Live updates and server code near your users."
+   },
+   {
+    "title": "Branching",
+    "text": "A database per pull request."
+   }
+  ],
+  "platforms": [
+   "Web dashboard",
+   "CLI",
+   "JavaScript",
+   "Python",
+   "Swift",
+   "Kotlin"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ },
+ {
+  "slug": "protector-y",
+  "name": "Protector Y",
+  "category": "SECURITY",
+  "tagline": "Protection for every device you own.",
+  "summary": "Protector Y protects computers, phones and tablets from viruses, ransomware, dangerous websites and scams, with a secure VPN and a password manager.",
+  "body": "Protector Y keeps your devices and your identity safe without slowing you down. One subscription covers every device in your household.\n\n## Real-time protection\nProtector Y scans files and apps as they arrive and as they run, stopping viruses, spyware and ransomware before they do damage.\n\n## Safe browsing\nDangerous and fake websites are blocked before they load, on every browser, with the Protector Y extension.\n\n## Scam and phishing protection\nProtector Y warns you about suspicious links in messages and email.\n\n## Ransomware shield\nProtected folders can only be changed by apps you trust.\n\n## Secure VPN\nEncrypt your connection on public Wi-Fi with one tap.\n\n## Password manager\nStrong, unique passwords for every site, filled in automatically and synced across your devices.\n\n## Identity alerts\nGet notified if your email address appears in a known data breach, with steps to secure your accounts.\n\n## Light on your device\nScans run when you're not busy, and gaming mode pauses notifications while you play.",
+  "visual": "image",
+  "image": "/images/products/protector-y.svg",
+  "primaryCta": {
+   "label": "",
+   "href": ""
+  },
+  "secondaryCta": {
+   "label": "Read the docs",
+   "href": "/docs/protector-y-overview"
+  },
+  "features": [
+   {
+    "title": "Real-time protection",
+    "text": "Stops viruses, spyware and ransomware."
+   },
+   {
+    "title": "Safe browsing",
+    "text": "Blocks dangerous and fake websites."
+   },
+   {
+    "title": "Scam protection",
+    "text": "Warns about suspicious links in messages."
+   },
+   {
+    "title": "Secure VPN",
+    "text": "Encrypted browsing on public Wi-Fi."
+   },
+   {
+    "title": "Password manager",
+    "text": "Strong passwords, filled in everywhere."
+   },
+   {
+    "title": "Identity alerts",
+    "text": "Know when your email appears in a breach."
+   }
+  ],
+  "platforms": [
+   "Windows",
+   "macOS",
+   "Android",
+   "Lu devices",
+   "Browser extension"
+  ],
+  "status": "coming-soon",
+  "showOnHome": true
+ }
+]

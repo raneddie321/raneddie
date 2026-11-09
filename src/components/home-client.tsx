@@ -82,7 +82,7 @@ export default function HomeClient({ content }: { content: SiteContent }) {
                 <small>{String(i + 1).padStart(2, '0')} / {p.category}</small>
                 <h3>{p.name}</h3>
                 <p>{p.tagline}</p>
-                <b>Explore {p.name.split(' ')[0]} <ArrowUpRight size={16} /></b>
+                <b>Explore {p.name} <ArrowUpRight size={16} /></b>
               </div>
               <CardVisual visual={p.visual} image={p.image} alt={p.name} />
             </a>
