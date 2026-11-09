@@ -9,7 +9,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        {clerkEnabled ? <ClerkProvider>{children}</ClerkProvider> : children}
+        {clerkEnabled ? (
+          <ClerkProvider
+            signInUrl="https://accounts.raneddie.com/sign-in"
+            signUpUrl="https://accounts.raneddie.com/sign-up"
+            afterSignOutUrl="/"
+          >
+            {children}
+          </ClerkProvider>
+        ) : (
+          children
+        )}
       </body>
     </html>
   );
