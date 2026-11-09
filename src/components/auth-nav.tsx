@@ -1,14 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useClerk, useUser } from "@clerk/nextjs";
+import { UserRound } from "lucide-react";
 
+/** RanEddie ID lives on its own subdomain; every account action goes there. */
+const RANEDDIE_ID_URL = "https://id.raneddie.com";
+const SITE_URL = "https://raneddie.com";
+
+function signInUrl(returnTo: string) {
+  return `${RANEDDIE_ID_URL}/sign-in?redirect_url=${encodeURIComponent(returnTo)}`;
+}
+
+/**
+ * A real link (works before JavaScript/Clerk loads, supports middle-click and long-press).
+ * After mount it returns the player to the exact page they were on.
+ */
 function SignInLink() {
-  function openSignIn() {
-    const returnTo = typeof window !== "undefined" ? window.location.href : "https://raneddie.com";
-    window.location.href = `https://accounts.raneddie.com/sign-in?redirect_url=${encodeURIComponent(returnTo)}`;
-  }
-  return <button type="button" className="navlink account-nav-signin" onClick={openSignIn}>Sign in <span aria-hidden>↗</span></button>;
+  const [href, setHref] = useState(() => signInUrl(`${SITE_URL}/`));
+  useEffect(() => {
+    setHref(signInUrl(window.location.href));
+  }, []);
+  return (
+    <a href={href} className="navlink account-nav-signin" aria-label="Sign in with RanEddie ID">
+      <UserRound size={16} aria-hidden />
+      <span>Sign in</span>
+    </a>
+  );
 }
 
 function ConnectedAccountMenu() {
@@ -16,30 +34,56 @@ function ConnectedAccountMenu() {
   const { signOut } = useClerk();
   const [open, setOpen] = useState(false);
 
-  // Keep authentication accessible if Clerk is slow to initialize.
-  // Once Clerk loads, a signed-in user is automatically shown their account menu.
-  if (!isLoaded) return <SignInLink />;
-  if (!isSignedIn || !user) return <SignInLink />;
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Never block sign-in on Clerk: until it has loaded (or if it fails to load) show the plain link.
+  if (!isLoaded || !isSignedIn || !user) return <SignInLink />;
+
+  const display = user.username || user.firstName || "Account";
+  const initial = (user.firstName || user.username || user.primaryEmailAddress?.emailAddress || "R").slice(0, 1).toUpperCase();
 
   return (
     <div className="raneddie-account-menu">
-      <button className="raneddie-account-trigger" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open}>
+      <button
+        className="raneddie-account-trigger"
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-label={`RanEddie ID menu for ${display}`}
+      >
         <span className="raneddie-account-avatar">
-          {user.imageUrl ? <img src={user.imageUrl} alt="" /> : (user.firstName || user.username || user.primaryEmailAddress?.emailAddress || "R").slice(0, 1).toUpperCase()}
+          {user.hasImage ? <img src={user.imageUrl} alt="" /> : initial}
         </span>
-        <span className="raneddie-account-name">{user.username || user.firstName || "Account"}</span>
-        <span className="raneddie-account-chevron">⌄</span>
+        <span className="raneddie-account-name">{display}</span>
+        <span className="raneddie-account-chevron" aria-hidden>⌄</span>
       </button>
       {open && (
         <>
           <button className="raneddie-account-dismiss" aria-label="Close account menu" onClick={() => setOpen(false)} />
-          <div className="raneddie-account-dropdown">
+          <div className="raneddie-account-dropdown" role="menu">
             <div className="raneddie-account-dropdown-user">
               <b>{user.fullName || user.username || "RanEddie member"}</b>
               <small>{user.primaryEmailAddress?.emailAddress}</small>
             </div>
-            <a href="https://accounts.raneddie.com/account" onClick={() => setOpen(false)}>Account Center <span>↗</span></a>
-            <button type="button" onClick={() => signOut({ redirectUrl: "https://raneddie.com" })}>Sign out <span>↗</span></button>
+            <a role="menuitem" href={`${RANEDDIE_ID_URL}/account`} onClick={() => setOpen(false)}>
+              Account Center <span aria-hidden>↗</span>
+            </a>
+            <button
+              role="menuitem"
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                signOut({ redirectUrl: window.location.origin });
+              }}
+            >
+              Sign out <span aria-hidden>↗</span>
+            </button>
           </div>
         </>
       )}
@@ -48,7 +92,7 @@ function ConnectedAccountMenu() {
 }
 
 export default function AuthNav() {
-  const enabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
-  if (!enabled) return <SignInLink />;
+  // Without a Clerk key (local dev / preview) the button still sends players to RanEddie ID.
+  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return <SignInLink />;
   return <ConnectedAccountMenu />;
 }
