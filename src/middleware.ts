@@ -5,7 +5,11 @@ const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 const handler = clerkEnabled
   ? clerkMiddleware({
-      authorizedParties: ["https://raneddie.com", "https://www.raneddie.com"],
+      authorizedParties: [
+        "https://raneddie.com",
+        "https://www.raneddie.com",
+        "https://raneddie-xisa.vercel.app",
+      ],
     })
   : () => NextResponse.next();
 
