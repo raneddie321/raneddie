@@ -19,7 +19,7 @@ import unicodedata
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "content"))
 from products import PRODUCTS  # noqa: E402
-from topics import TOPICS  # noqa: E402
+from topics import EXTRAS, TOPICS  # noqa: E402
 
 ID = "https://id.raneddie.com"
 SECTION_PREFIX = {
@@ -53,6 +53,65 @@ def steps(items):
 
 def doc(slug, section, title, description, body):
     return {"slug": slug, "section": section, "title": title, "description": description, "body": body.strip()}
+
+
+
+EXTRA_BODIES = {}
+
+# ----------------------------------------------------------------------------------- shared blocks
+def before_you_start(p):
+    n = p["name"]
+    return f"""## Before you start
+- A RanEddie ID. [Create one](/docs/raneddie-id-create-account) if you don't have one yet.
+- {n} on one of its supported platforms: {', '.join(p['platforms'])}.
+- The latest version of {n} and of your device's software. Updates often fix problems and add improvements.
+- An internet connection for signing in, syncing and anything that uses RanEddie's cloud."""
+
+
+def more_you_can_do(p, exclude=None):
+    s = p["slug"]
+    items = [f"[{f['n']}](/docs/{s}-{slugify(f['n'])}) — {f['d']}." for f in p["docFeatures"] if f["n"] != exclude]
+    return f"## More you can do in {p['name']}\n" + bullets(items)
+
+
+def terms(p):
+    return f"## Terms used in {p['name']}\n" + bullets(f"**{t}** — {d}" for t, d in p["glossary"])
+
+
+def privacy_and_security(p):
+    s, n = p["slug"], p["name"]
+    return f"""## Privacy and security
+{n} stores {p['data']}. Everything is tied to your RanEddie ID and protected by it, so a strong password and two-step verification protect your {n} data too.
+
+- [{n} and your privacy](/docs/{s}-privacy)
+- [Keep your {n} account secure](/docs/{s}-security)"""
+
+
+def if_it_continues(p):
+    n = p["name"]
+    return f"""## If the problem continues
+1. Restart {n} completely, then restart your device.
+2. Install any available updates for {n} and for your device.
+3. Sign out of {n}, then sign back in with your RanEddie ID.
+4. Try on another device or another network to see whether the problem follows you.
+5. If nothing helps, [contact support](/docs/{p['slug']}-get-help) — we're happy to look into it.
+
+## What to include when you contact support
+- Your RanEddie ID username (never your password).
+- The device, operating system and version of {n} you're using.
+- What you were doing, what you expected and what happened instead.
+- Any error message, word for word, and a screenshot if you can.
+- When the problem started and whether anything changed around that time."""
+
+
+def quick_checks(p):
+    n = p["name"]
+    return f"""## Quick checks
+Before you go further, these solve many problems in a minute or two:
+- Check your internet connection by opening another website or app.
+- Make sure you're signed in to {n} with the right RanEddie ID.
+- Look for an update to {n}.
+- If you're using {n} in a browser, reload the page and turn off content blockers for it."""
 
 
 # ----------------------------------------------------------------------------------- product docs
@@ -237,11 +296,164 @@ Email [contact@raneddie.com](mailto:contact@raneddie.com) with:
 Support will never ask for your password or verification codes.
 """))
 
+    extra = {
+        f"{s}-overview": f"""## About {n}
+{p['body']}
+
+## Popular tasks
+{bullets(f"[{f['n']}](/docs/{s}-{slugify(f['n'])}) — {f['d']}." for f in feats)}
+
+{terms(p)}
+
+## Learn more
+- [{n} FAQ](/docs/{s}-faq)
+- [Troubleshooting {n}](/docs/{trouble})
+- [{n} and your privacy](/docs/{s}-privacy)""",
+        start_slug: f"""## Your first 30 minutes
+Work through this checklist to get comfortable with {n}:
+{bullets(f"Try **{f['n']}**: {f['d']}. [How to](/docs/{s}-{slugify(f['n'])})" for f in feats)}
+
+## Secure your account
+- Turn on [two-step verification](/docs/sign-in-two-step-verification-explained) for your RanEddie ID.
+- Review [Keep your {n} account secure](/docs/{s}-security).
+
+## Check your privacy settings
+Take a minute to review [{n} and your privacy](/docs/{s}-privacy) and choose what suits you.
+
+{terms(p)}""",
+        f"{s}-availability-and-requirements": f"""## Keeping {n} up to date
+Updates add features, fix problems and keep {n} secure. Turn on automatic updates wherever your platform offers them.
+
+## Accounts and sign-in
+You use {n} with your RanEddie ID. See [Sign in to {n} with your RanEddie ID](/docs/{s}-sign-in).
+
+## Accessibility
+{n} respects your device's accessibility settings. See [Accessibility in {n}](/docs/{s}-accessibility).
+
+{quick_checks(p)}""",
+        f"{s}-sign-in": f"""## Signing in on several devices
+You can be signed in to {n} on more than one device at the same time. Each device appears under Active sessions in your Account Center, where you can sign it out remotely.
+
+## Signing out
+Choose Sign out from {n}'s account menu. To sign out everywhere at once, revoke your sessions from the Security page of your [Account Center](https://id.raneddie.com/account).
+
+## Keep sign-in safe
+- Sign in only at id.raneddie.com.
+- Turn on [two-step verification](/docs/sign-in-two-step-verification-explained).
+- RanEddie will never ask for your password or verification codes.
+
+{privacy_and_security(p)}""",
+        f"{s}-privacy": f"""## Children and teens
+Younger users get stricter defaults. Parents can manage {n} from [Family settings](/docs/families-family-settings-overview).
+
+## AI and your data
+{p['ai']}
+
+## How your data is protected
+Data stored in RanEddie's cloud is encrypted in transit and at rest, and access is protected by your RanEddie ID.
+
+## How long data is kept
+We keep your {n} data while your account is active. When you delete something, it's removed from active systems promptly and from backups within a limited period.
+
+## Your rights
+Depending on where you live, you may have rights to access, correct, delete or download your data. See [Your privacy rights](/docs/privacy-your-privacy-rights).""",
+        f"{s}-download-or-delete-your-data": f"""## What's included in an export
+{n} exports include {p['data']}, in common formats you can open with other apps.
+
+## How long it takes
+Small exports are ready in minutes. Large ones can take a few days. We'll email you when your download is ready, and the link stays valid for 7 days.
+
+## Before you delete
+- Download anything you want to keep.
+- Cancel any {n} subscriptions.
+- Remember that deleting can't be undone after the recovery period.""",
+        f"{s}-security": f"""## Signs something may be wrong
+- Sign-in alerts you don't recognise.
+- Changes to your {n} settings you didn't make.
+- Purchases you didn't make.
+
+If you see any of these, follow [My account was hacked](/docs/security-my-account-was-hacked) right away.
+
+{privacy_and_security(p)}""",
+        f"{s}-ai-features": f"""## Tips for better results
+- Be specific about what you want.
+- Review results before you use them, especially numbers and names.
+- Report results that are wrong or inappropriate so we can improve.
+
+## Your AI activity
+You can review and delete AI activity from Privacy > AI activity in your Account Center, or have it deleted automatically.""",
+        f"{s}-plans-and-billing": f"""## Family and shared plans
+Where {n} offers family plans, one organiser pays and invites members. See [Family plans](/docs/billing-family-plans).
+
+## Unexpected charges
+Check family members' purchases and renewals first, then see [Unexpected charge](/docs/billing-unexpected-charge).
+
+## Receipts and taxes
+Receipts are under Payments & plans > History. Tax depends on your billing address.""",
+        f"{s}-for-families": f"""## Set up for a child
+1. Add your child to your family group from the Family section of your Account Center.
+2. Choose settings that suit their age.
+3. Open {n} on their device and sign in with their account.
+
+## Spending
+Turn on purchase approvals so children ask before buying anything in {n}.
+
+## Talk about it
+Settings help, but conversations matter more. See [Talking to kids about online safety](/docs/families-talking-to-kids-about-online-safety).""",
+        f"{s}-tips": f"""## Stay up to date
+Turn on automatic updates so you always have the latest improvements to {n}.
+
+## Learn the words
+{terms(p)}
+
+## Explore further
+{more_you_can_do(p)}""",
+        f"{s}-get-help": f"""{quick_checks(p)}
+
+## Common problems
+{bullets(f"[{f['sym']}](/docs/{s}-{slugify('fix ' + f['sym'])})" for f in feats)}""",
+        trouble: f"""{quick_checks(p)}
+
+{if_it_continues(p)}""",
+        f"{s}-accessibility": f"""## On each platform
+{bullets(f"**{pl}** — {n} follows the accessibility settings of {pl}, including text size, contrast, screen reader and reduce motion where available." for pl in p['platforms'])}
+
+## Tips
+- Increase text size in your device settings — {n} follows it.
+- Turn on dark mode for comfortable viewing in low light.
+- Turn on reduce motion to minimise animations.
+
+## Learn more
+- [Accessibility at RanEddie](/docs/accessibility-at-raneddie)
+- [Captions and transcripts](/docs/accessibility-captions-and-transcripts)""",
+        f"{s}-glossary": f"""## General RanEddie terms
+- **RanEddie ID** — the one account you use across every RanEddie product.
+- **Account Center** — where you manage your RanEddie ID at id.raneddie.com/account.
+- **Two-step verification** — a second check, like an authenticator code, after your password.
+- **Session** — a device or browser where you're signed in.
+- **Cloudly** — RanEddie's cloud, where your files and backups live.
+- **Family group** — up to six people who share plans and family settings.
+
+## About {n}
+{p['summary']} See the [{n} overview](/docs/{s}-overview) to learn more.""",
+        f"{s}-faq": f"""## Is {n} available in my country?
+Availability varies. See [{n} availability and requirements](/docs/{s}-availability-and-requirements).
+
+## How do I keep my account safe?
+See [Keep your {n} account secure](/docs/{s}-security).
+
+## How do I delete my {n} data?
+See [Download or delete your {n} data](/docs/{s}-download-or-delete-your-data).""",
+    }
+    EXTRA_BODIES.update(extra)
+
     for f in feats:
         fs = slugify(f["n"])
         fix = slugify("fix " + f["sym"])
         out.append(doc(f"{s}-{fs}", sec, f["n"], f"In {n}: {f['d']}.", f"""
-With {n} you can {f['d']}.
+With {n} you can {f['d']}. This article walks you through it step by step, shares tips that make it easier and explains what to do if it doesn't work the way you expect.
+
+{before_you_start(p)}
 
 ## How to
 {steps(f['s'])}
@@ -249,19 +461,46 @@ With {n} you can {f['d']}.
 ## Tip
 {f['t']}
 
-## Having trouble?
-See [{f['sym']}](/docs/{s}-{fix}).
+## Good to know
+- Changes are saved to your RanEddie ID, so they follow you to your other devices where {n} is available.
+- Some options can vary by platform ({', '.join(p['platforms'])}) and by country.
+- You can come back and change your choices at any time.
+
+## If something goes wrong
+The most common reasons are:
+{bullets(f['c'])}
+
+The quickest fixes:
+{steps(f['f'])}
+
+For the full guide, see [{f['sym']}](/docs/{s}-{fix}).
+
+{privacy_and_security(p)}
+
+{more_you_can_do(p, f['n'])}
+
+{terms(p)}
 """))
-        out.append(doc(f"{s}-{fix}", sec, f["sym"], f"{n}: what to do when this happens.", f"""
+        out.append(doc(f"{s}-{fix}", sec, f["sym"], f"{n}: why this happens and how to fix it.", f"""
+This article helps when you're using **{f['n']}** in {n} and this happens: *{f['sym'].lower()}*. Work through the sections in order — most people are sorted by the end of the second one.
+
+{quick_checks(p)}
+
 ## Why it happens
 {bullets(f['c'])}
 
 ## How to fix it
 {steps(f['f'])}
 
-## Related
-- [{f['n']}](/docs/{s}-{fs})
-- [Troubleshooting {n}](/docs/{trouble})
+{if_it_continues(p)}
+
+## Prevent it next time
+{f['t']}
+
+## About {f['n']}
+{n} lets you {f['d']}. See [{f['n']}](/docs/{s}-{fs}) for the full how-to.
+
+{more_you_can_do(p)}
 """))
     return out
 
@@ -272,8 +511,11 @@ def topic_docs():
     for section, articles in TOPICS.items():
         prefix = SECTION_PREFIX[section]
         name = SECTION_NAME.get(section, section)
-        for title, desc, blocks in articles:
-            parts = []
+        ex = EXTRAS.get(name)
+        for i, (title, desc, blocks) in enumerate(articles):
+            parts = [desc[:1].upper() + desc[1:] if desc.endswith(".") else desc + "."]
+            if ex:
+                parts.append(f"## Why it matters\n{ex['why']}")
             for heading, content in blocks:
                 if isinstance(content, tuple) and content[0] == "steps":
                     body = steps(content[1])
@@ -282,11 +524,38 @@ def topic_docs():
                 else:
                     body = content
                 parts.append(f"## {heading}\n{body}")
+            if ex:
+                pr = ex["practices"]
+                picks = [pr[(i + k) % len(pr)] for k in range(0, len(pr), 2)][:4]
+                parts.append("## Best practices\n" + bullets(picks))
+                if ex.get("product_doc"):
+                    parts.append(f"## In each RanEddie product\nFor product-specific details, see:\n" + bullets(
+                        f"[{ex['product_label'].format(name=p['name'])}](/docs/{p['slug']}-{ex['product_doc']})" for p in PRODUCTS))
+                if name == "Developers":
+                    dev = [q for q in PRODUCTS if q["slug"] in ("baseline", "cloudly")]
+                    parts.append("## Developer guides\n" + bullets(
+                        f"[{f['n']}](/docs/{q['slug']}-{slugify(f['n'])}) ({q['name']}) — {f['d']}." for q in dev for f in q["docFeatures"]))
+                fq = ex["faq"]
+                qa = [fq[i % len(fq)], fq[(i + 1) % len(fq)]]
+                parts.append("## Common questions\n" + "\n\n".join(f"**{q}**\n{a}" for q, a in qa))
             slug = slugify(f"{prefix}-{title}")
-            # avoid "ai-ai-..." style duplicates
             slug = re.sub(rf"^{prefix}-{prefix}-", f"{prefix}-", slug)
             out.append(doc(slug, name, title, desc, "\n\n".join(parts)))
     return out
+
+
+def add_related(docs):
+    """Every page ends with a few related articles from the same section."""
+    by_section = {}
+    for d in docs:
+        by_section.setdefault(d["section"], []).append(d)
+    for items in by_section.values():
+        for i, d in enumerate(items):
+            if "## Related" in d["body"]:
+                continue
+            near = [items[j] for j in (i - 2, i - 1, i + 1, i + 2, i + 3) if 0 <= j < len(items) and j != i][:5]
+            if near:
+                d["body"] += "\n\n## Related articles\n" + bullets(f"[{x['title']}](/docs/{x['slug']}) — {x['description']}" for x in near)
 
 
 # ----------------------------------------------------------------------------------- images
@@ -428,6 +697,42 @@ def main():
         docs += product_docs(p)
     docs += topic_docs()
 
+    # Extra depth for product pages and the original hand-written pages
+    for d in docs:
+        if d["slug"] in EXTRA_BODIES:
+            d["body"] += "\n\n" + EXTRA_BODIES[d["slug"]].strip()
+    for d in base_docs:
+        ex = EXTRAS.get(d["section"])
+        if ex:
+            d["body"] += f"\n\n## Why it matters\n{ex['why']}\n\n## Best practices\n" + bullets(ex["practices"][:5])
+            d["body"] += "\n\n## Common questions\n" + "\n\n".join(f"**{q}**\n{a}" for q, a in ex["faq"][:3])
+    directory = "## Browse by product\n" + bullets(f"[{p['name']}](/docs/{p['slug']}-overview) — {p['summary']}" for p in PRODUCTS)
+    directory += "\n\n## Browse by topic\n" + bullets(
+        f"[{SECTION_NAME.get(sec, sec)}](/docs/{slugify(SECTION_PREFIX[sec] + '-' + arts[0][0]).replace(SECTION_PREFIX[sec] + '-' + SECTION_PREFIX[sec] + '-', SECTION_PREFIX[sec] + '-')}) — {len(arts)} articles, starting with “{arts[0][0]}”."
+        for sec, arts in TOPICS.items())
+    for d in base_docs:
+        if d["slug"] in ("getting-started", "support-faq"):
+            d["body"] += "\n\n" + directory
+    for d in base_docs:
+        if d["slug"] == "support-faq":
+            d["body"] += """
+
+## I forgot my password. What now?
+[Reset your password](/docs/raneddie-id-reset-password) with a code sent to your email.
+
+## Is my data safe?
+Data in RanEddie's cloud is encrypted in transit and at rest. See [RanEddie's privacy commitments](/docs/privacy-raneddie-s-privacy-commitments).
+
+## How do I cancel a subscription?
+See [Cancel a subscription](/docs/billing-cancel-a-subscription).
+
+## Does RanEddie use AI on my content?
+Only when you ask an AI feature to help, and never for advertising. See [How RanEddie uses AI](/docs/ai-how-raneddie-uses-ai).
+
+## How do I report a security problem?
+See [Report a security vulnerability](/docs/security-report-a-security-vulnerability)."""
+    add_related(docs)
+
     # sanity: unique slugs, valid internal links
     seen = {}
     for d in docs:
@@ -474,6 +779,8 @@ def main():
     print(f"products: {len(products)}  docs: {len(docs)} (new: {len(docs) - len(base_docs)})")
     for s, c in by_section.items():
         print(f"  {c:4d}  {s}")
+    words = [len(re.findall(r"\w+", d["body"])) for d in docs]
+    print(f"words per doc: min {min(words)}, median {sorted(words)[len(words)//2]}, avg {sum(words)//len(words)}, total {sum(words):,}")
     print(f"docs-library.json: {os.path.getsize(os.path.join(ROOT, 'src', 'data', 'docs-library.json')) // 1024} KB")
 
 
