@@ -6,7 +6,7 @@ import { useClerk, useUser } from "@clerk/nextjs";
 function SignInLink() {
   function openSignIn() {
     const returnTo = typeof window !== "undefined" ? window.location.href : "https://raneddie.com";
-    window.location.href = `https://id.raneddie.com/sign-in?redirect_url=${encodeURIComponent(returnTo)}`;
+    window.location.href = `https://accounts.raneddie.com/sign-in?redirect_url=${encodeURIComponent(returnTo)}`;
   }
   return <button type="button" className="navlink account-nav-signin" onClick={openSignIn}>Sign in <span aria-hidden>↗</span></button>;
 }
@@ -36,7 +36,7 @@ function ConnectedAccountMenu() {
               <b>{user.fullName || user.username || "RanEddie member"}</b>
               <small>{user.primaryEmailAddress?.emailAddress}</small>
             </div>
-            <a href="https://id.raneddie.com/account" onClick={() => setOpen(false)}>Account Center <span>↗</span></a>
+            <a href="https://accounts.raneddie.com/account" onClick={() => setOpen(false)}>Account Center <span>↗</span></a>
             <button type="button" onClick={() => signOut({ redirectUrl: "https://raneddie.com" })}>Sign out <span>↗</span></button>
           </div>
         </>
