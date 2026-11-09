@@ -10,7 +10,7 @@ import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache';
 import { del, list, put } from '@vercel/blob';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { DEFAULT_CONTENT, withDefaults, type SiteContent } from './content';
+import { CONTENT_SCHEMA, DEFAULT_CONTENT, withDefaults, type SiteContent } from './content';
 
 const PREFIX = 'content/site-';
 const KEEP_VERSIONS = 40;
@@ -63,7 +63,9 @@ async function loadLatest(): Promise<SiteContent> {
 }
 
 /** Cached for every visitor; saving from the admin clears the cache right away. */
-export const getContent = unstable_cache(loadLatest, ['site-content-v1'], { tags: ['site-content'], revalidate: 600 });
+// Keyed per deployment so new defaults (products, docs) show up right after a deploy.
+const CACHE_KEY = ['site-content', String(CONTENT_SCHEMA), process.env.VERCEL_DEPLOYMENT_ID ?? process.env.VERCEL_GIT_COMMIT_SHA ?? 'local'];
+export const getContent = unstable_cache(loadLatest, CACHE_KEY, { tags: ['site-content'], revalidate: 600 });
 
 /** Uncached read for the admin panel. */
 export const getContentFresh = loadLatest;

@@ -1,6 +1,9 @@
 import { requestIsAdmin } from '@/lib/admin-auth';
 import { getContentFresh, saveContent } from '@/lib/content-store';
 import { RESERVED_SLUGS, slugify, withDefaults, type SiteContent } from '@/lib/content';
+import { allDocs, toStoredDocs } from '@/lib/docs';
+
+const forStudio = (c: SiteContent): SiteContent => ({ ...c, docs: allDocs(c), docsRemoved: [] });
 
 export const dynamic = 'force-dynamic';
 
@@ -8,7 +11,7 @@ const deny = () => Response.json({ error: 'Not signed in.' }, { status: 401 });
 
 export async function GET() {
   if (!(await requestIsAdmin())) return deny();
-  return Response.json(await getContentFresh(), { headers: { 'Cache-Control': 'no-store' } });
+  return Response.json(forStudio(await getContentFresh()), { headers: { 'Cache-Control': 'no-store' } });
 }
 
 function validate(c: SiteContent): string | null {
@@ -34,7 +37,7 @@ function validate(c: SiteContent): string | null {
 export async function PUT(req: Request) {
   if (!(await requestIsAdmin())) return deny();
   const raw = await req.text();
-  if (raw.length > 1_500_000) return Response.json({ error: 'Content is too large.' }, { status: 413 });
+  if (raw.length > 6_000_000) return Response.json({ error: 'Content is too large.' }, { status: 413 });
   let parsed: SiteContent;
   try {
     parsed = withDefaults(JSON.parse(raw));
@@ -46,8 +49,9 @@ export async function PUT(req: Request) {
   const problem = validate(parsed);
   if (problem) return Response.json({ error: problem }, { status: 400 });
   try {
-    const savedAt = await saveContent(parsed);
-    return Response.json({ ok: true, savedAt, content: parsed });
+    const stored = { ...parsed, ...toStoredDocs(parsed.docs) };
+    const savedAt = await saveContent(stored);
+    return Response.json({ ok: true, savedAt, content: forStudio(stored) });
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Save failed.' }, { status: 500 });
   }

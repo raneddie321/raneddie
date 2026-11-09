@@ -121,3 +121,9 @@
   .adm-subitem { flex-direction:column; align-items:stretch; }
   .adm-nav-foot a span, .adm-brand small { display:none; }
 }
+.adm-list-search { width:100%; min-height:38px; margin:4px 0 6px; padding:8px 12px; border:1px solid var(--a-line); border-radius:10px; background:var(--a-bg); color:var(--a-ink); font:13px inherit; font-family:inherit; outline:none; box-sizing:border-box; }
+.adm-list-search:focus { border-color:var(--a-blue); }
+.adm-list .adm-list-section { justify-content:space-between; font-weight:700; font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--a-muted); }
+.adm-list .adm-list-section small { font-weight:600; }
+.adm-actions { display:flex; gap:8px; }
+.adm-actions a.adm-btn { text-decoration:none; }

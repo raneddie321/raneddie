@@ -447,9 +447,14 @@ function LabTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => Site
 
 function DocsTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => SiteContent) => void }) {
   const [sel, setSel] = useState(0);
+  const [filter, setFilter] = useState('');
   const d = c.docs[sel];
-  const sections = [...new Set(c.docs.map((x) => x.section))];
+  const sections = useMemo(() => [...new Set(c.docs.map((x) => x.section))], [c.docs]);
+  const [openSection, setOpenSection] = useState<string | null>(d?.section ?? null);
   const update = (patch: Partial<DocPage>) => set((c) => ({ ...c, docs: c.docs.map((x, k) => (k === sel ? { ...x, ...patch } : x)) }));
+  const q = filter.trim().toLowerCase();
+  const matches = (x: DocPage) => !q || `${x.title} ${x.slug} ${x.section}`.toLowerCase().includes(q);
+
   return (
     <div className="adm-split">
       <aside className="adm-list">
@@ -457,26 +462,36 @@ function DocsTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => Sit
           <Text label="Docs title" value={c.docsHome.title} onChange={(v) => set((c) => ({ ...c, docsHome: { ...c.docsHome, title: v } }))} />
           <Text label="Docs subtitle" value={c.docsHome.subtitle} onChange={(v) => set((c) => ({ ...c, docsHome: { ...c.docsHome, subtitle: v } }))} />
         </div>
-        {sections.map((s) => (
-          <div key={s} className="adm-list-group">
-            <p>{s}</p>
-            {c.docs.map((x, i) =>
-              x.section === s ? (
-                <button key={i} className={i === sel ? 'active' : ''} onClick={() => setSel(i)}>
-                  <span>
-                    <b>{x.title || 'Untitled'}</b>
-                    <small>/docs/{x.slug}</small>
-                  </span>
-                </button>
-              ) : null,
-            )}
-          </div>
-        ))}
+        <input className="adm-list-search" placeholder={`Search ${c.docs.length} pages`} value={filter} onChange={(e) => setFilter(e.target.value)} />
+        {sections.map((s) => {
+          const items = c.docs.map((x, i) => [x, i] as const).filter(([x]) => x.section === s && matches(x));
+          if (!items.length) return null;
+          const open = !!q || openSection === s;
+          return (
+            <div key={s} className="adm-list-group">
+              <button className="adm-list-section" onClick={() => setOpenSection(open && !q ? null : s)} aria-expanded={open}>
+                <span>{s}</span>
+                <small>{items.length}</small>
+              </button>
+              {open &&
+                items.map(([x, i]) => (
+                  <button key={x.slug + i} className={i === sel ? 'active' : ''} onClick={() => setSel(i)}>
+                    <span>
+                      <b>{x.title || 'Untitled'}</b>
+                      <small>/docs/{x.slug}</small>
+                    </span>
+                  </button>
+                ))}
+            </div>
+          );
+        })}
         <button
           className="adm-list-add"
           onClick={() => {
-            set((c) => ({ ...c, docs: [...c.docs, { slug: `new-page-${c.docs.length + 1}`, section: d?.section ?? 'Get started', title: 'New page', description: '', body: '## First heading\nWrite here.' }] }));
+            const section = d?.section ?? 'Get started';
+            set((c) => ({ ...c, docs: [...c.docs, { slug: `new-page-${Date.now().toString(36)}`, section, title: 'New page', description: '', body: '## First heading\nWrite here.' }] }));
             setSel(c.docs.length);
+            setOpenSection(section);
           }}
         >
           <Plus size={15} /> Add page
@@ -487,19 +502,21 @@ function DocsTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => Sit
           title={d.title || 'Untitled page'}
           subtitle={`raneddie.com/docs/${d.slug}`}
           action={
-            <ItemTools
-              index={sel}
-              count={c.docs.length}
-              onMove={(to) => {
-                set((c) => ({ ...c, docs: move(c.docs, sel, to) }));
-                setSel(Math.max(0, Math.min(c.docs.length - 1, to)));
-              }}
-              onRemove={() => {
-                if (!confirm(`Delete “${d.title}”?`)) return;
-                set((c) => ({ ...c, docs: c.docs.filter((_, k) => k !== sel) }));
-                setSel(0);
-              }}
-            />
+            <div className="adm-actions">
+              <a className="adm-btn small" href={`/docs/${d.slug}`} target="_blank" rel="noreferrer">
+                <ExternalLink size={14} /> Open
+              </a>
+              <button
+                className="adm-btn small"
+                onClick={() => {
+                  if (!confirm(`Delete “${d.title}”?`)) return;
+                  set((c) => ({ ...c, docs: c.docs.filter((_, k) => k !== sel) }));
+                  setSel(0);
+                }}
+              >
+                <Trash2 size={14} /> Delete
+              </button>
+            </div>
           }
         >
           <div className="adm-card">

@@ -4,5 +4,7 @@ import { getContent } from '@/lib/content-store';
 export const revalidate = 600;
 
 export default async function Home() {
-  return <HomeClient content={await getContent()} />;
+  const content = await getContent();
+  // The homepage doesn't need docs; keep the page payload small.
+  return <HomeClient content={{ ...content, docs: [] }} />;
 }

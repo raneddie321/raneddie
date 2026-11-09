@@ -6,3 +6,5 @@ out
 *.log
 .data/
 public/uploads-local/
+__pycache__/
+tsconfig.tsbuildinfo
