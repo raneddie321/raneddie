@@ -10,6 +10,7 @@ import {
   Eye,
   FlaskConical,
   Home,
+  Mail,
   ImageIcon,
   LogOut,
   Package,
@@ -35,14 +36,15 @@ import { renderMarkdown } from '@/lib/markdown';
 
 /* eslint-disable @next/next/no-img-element */
 
-type Tab = 'home' | 'products' | 'lab' | 'docs' | 'site' | 'images' | 'history';
+type Tab = 'home' | 'products' | 'lab' | 'docs' | 'site' | 'images' | 'messages' | 'history';
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Homepage', icon: <Home size={17} /> },
   { id: 'products', label: 'Products', icon: <Package size={17} /> },
-  { id: 'lab', label: 'Lab & Studio', icon: <FlaskConical size={17} /> },
+  { id: 'lab', label: 'About section', icon: <FlaskConical size={17} /> },
   { id: 'docs', label: 'Docs', icon: <BookOpen size={17} /> },
   { id: 'site', label: 'Site settings', icon: <Settings size={17} /> },
   { id: 'images', label: 'Images', icon: <ImageIcon size={17} /> },
+  { id: 'messages', label: 'Messages', icon: <Mail size={17} /> },
   { id: 'history', label: 'History', icon: <Clock size={17} /> },
 ];
 
@@ -403,36 +405,7 @@ function LabTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => Site
   const update = (i: number, patch: Partial<LabItem>) => set((c) => ({ ...c, lab: c.lab.map((x, k) => (k === i ? { ...x, ...patch } : x)) }));
   return (
     <>
-      <Panel
-        title="Lab — in development"
-        subtitle="Upcoming projects on the homepage. Remove them all to hide the section."
-        action={
-          <button className="adm-btn" onClick={() => set((c) => ({ ...c, lab: [...c.lab, { id: uid(), meta: 'PROJECT · COMING SOON', title: 'NEW', text: '' }] }))}>
-            <Plus size={15} /> Add project
-          </button>
-        }
-      >
-        <div className="adm-card">
-          <div className="adm-row">
-            <Text label="Section label" value={c.labSection.eyebrow} onChange={(v) => set((c) => ({ ...c, labSection: { ...c.labSection, eyebrow: v } }))} />
-            <Text label="Section title" value={c.labSection.title} onChange={(v) => set((c) => ({ ...c, labSection: { ...c.labSection, title: v } }))} />
-          </div>
-        </div>
-        {c.lab.map((l, i) => (
-          <div key={l.id} className="adm-card">
-            <div className="adm-card-head">
-              <b>{l.title || 'Untitled'}</b>
-              <ItemTools index={i} count={c.lab.length} onMove={(to) => set((c) => ({ ...c, lab: move(c.lab, i, to) }))} onRemove={() => set((c) => ({ ...c, lab: c.lab.filter((_, k) => k !== i) }))} />
-            </div>
-            <div className="adm-row">
-              <Text label="Small label" value={l.meta} onChange={(v) => update(i, { meta: v })} />
-              <Text label="Title" value={l.title} onChange={(v) => update(i, { title: v })} />
-            </div>
-            <Text label="Text" value={l.text} onChange={(v) => update(i, { text: v })} />
-          </div>
-        ))}
-      </Panel>
-      <Panel title="Studio section" subtitle="About RanEddie, near the bottom of the homepage.">
+      <Panel title="About section" subtitle="About RanEddie, near the bottom of the homepage.">
         <div className="adm-card">
           <div className="adm-row">
             <Text label="Small label" value={c.studio.eyebrow} onChange={(v) => set((c) => ({ ...c, studio: { ...c.studio, eyebrow: v } }))} />
@@ -634,6 +607,51 @@ function ImagesTab() {
   );
 }
 
+type Msg = { id: string; at: number; name: string; email: string; topic: string; message: string; ref: string };
+
+function MessagesTab() {
+  const [msgs, setMsgs] = useState<Msg[] | null>(null);
+  const load = useCallback(() => {
+    fetch('/api/admin/messages', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((d: { messages?: Msg[] }) => setMsgs(d.messages ?? []))
+      .catch(() => setMsgs([]));
+  }, []);
+  useEffect(load, [load]);
+  return (
+    <Panel title="Messages" subtitle="Sent from the contact form at raneddie.com/contact." action={<button className="adm-btn" onClick={load}>Refresh</button>}>
+      {msgs === null ? (
+        <p className="adm-muted">Loading…</p>
+      ) : msgs.length === 0 ? (
+        <p className="adm-muted">No messages yet.</p>
+      ) : (
+        msgs.map((m) => (
+          <div key={m.id} className="adm-card">
+            <div className="adm-card-head">
+              <b>{m.name} · <a href={`mailto:${m.email}?subject=${encodeURIComponent('Re: ' + m.topic)}`}>{m.email}</a></b>
+              <span className="adm-muted" style={{ fontSize: 12 }}>{m.topic} · {new Date(m.at).toLocaleString()}</span>
+            </div>
+            <p style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: 14, lineHeight: 1.6 }}>{m.message}</p>
+            <div className="adm-actions">
+              <a className="adm-btn small" href={`mailto:${m.email}?subject=${encodeURIComponent('Re: ' + m.topic)}`}>Reply by email</a>
+              <button
+                className="adm-btn small"
+                onClick={async () => {
+                  if (!confirm('Delete this message?')) return;
+                  await fetch('/api/admin/messages', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ref: m.ref }) });
+                  load();
+                }}
+              >
+                <Trash2 size={14} /> Delete
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </Panel>
+  );
+}
+
 function HistoryTab({ onRestored }: { onRestored: (c: SiteContent) => void }) {
   const [versions, setVersions] = useState<{ id: string; savedAt: number }[] | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -780,6 +798,7 @@ export default function AdminApp({ initial, storageReady }: { initial: SiteConte
         {tab === 'docs' && <DocsTab c={content} set={setContent} />}
         {tab === 'site' && <SiteTab c={content} set={setContent} />}
         {tab === 'images' && <ImagesTab />}
+        {tab === 'messages' && <MessagesTab />}
         {tab === 'history' && (
           <HistoryTab
             onRestored={(c) => {

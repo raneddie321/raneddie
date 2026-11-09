@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Analytics } from '@vercel/analytics/next';
 import { getContent } from '@/lib/content-store';
 import './globals.css';
 
@@ -24,7 +25,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{clerkEnabled ? <ClerkProvider>{children}</ClerkProvider> : children}</body>
+      <body>
+        {clerkEnabled ? <ClerkProvider>{children}</ClerkProvider> : children}
+        <Analytics />
+      </body>
     </html>
   );
 }
