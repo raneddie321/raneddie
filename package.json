@@ -12,7 +12,8 @@
     "lucide-react": "^0.468.0",
     "next": "^15.5.6",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "@clerk/nextjs": "^7.9.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.14",

@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import AuthNav from '@/components/auth-nav';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpLeft, Search, ShoppingCart, ChevronDown, Menu, X, Sun, Moon, Monitor, Sparkles, Gamepad2, Globe2, Layers3, ArrowUpRight } from 'lucide-react';
 const FIZZ='https://fizzbrowser.vercel.app/';
@@ -22,7 +23,7 @@ export default function Home(){
    <nav className={menu?'navlinks open':'navlinks'}>
     <a href="#products" onClick={()=>setMenu(false)}>Products</a><a href="#lab" onClick={()=>setMenu(false)}>Lab</a><a href="#studio" onClick={()=>setMenu(false)}>Studio</a><a href="#contact" onClick={()=>setMenu(false)}>Contact</a>
    </nav>
-   <div className="navtools"><a className="navlink" href={FIZZ}>Get Fizz <ArrowUpRight size={15}/></a><button className="theme-toggle" onClick={()=>changeTheme(theme==='light'?'dark':'light')} aria-label={theme==='light'?'Switch to dark mode':'Switch to light mode'} title={theme==='light'?'Dark mode':'Light mode'}>{theme==='light'?<Moon size={17}/>:<Sun size={17}/>}</button></div>
+   <div className="navtools"><AuthNav/><a className="navlink" href={FIZZ}>Get Fizz <ArrowUpRight size={15}/></a><button className="theme-toggle" onClick={()=>changeTheme(theme==='light'?'dark':'light')} aria-label={theme==='light'?'Switch to dark mode':'Switch to light mode'} title={theme==='light'?'Dark mode':'Light mode'}>{theme==='light'?<Moon size={17}/>:<Sun size={17}/>}</button></div>
   </header>
   <section className={'hero hero-'+current.kind} id="home">
    <div className="hero-inner">
