@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: site.title, template: '%s · RanEddie' },
     description: site.description,
     metadataBase: new URL('https://raneddie.com'),
-    icons: { icon: [{ url: '/favicon.png', type: 'image/png' }], shortcut: '/favicon.png', apple: '/favicon.png' },
+    icons: { icon: [{ url: '/favicon.png?v=2', type: 'image/png' }], shortcut: '/favicon.png?v=2', apple: '/favicon.png?v=2' },
     openGraph: { title: 'RanEddie', description: site.description, type: 'website' },
     twitter: { card: 'summary_large_image', title: 'RanEddie', description: site.description },
   };
