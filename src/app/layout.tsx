@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: site.title, template: '%s · RanEddie' },
     description: site.description,
     metadataBase: new URL('https://raneddie.com'),
-    icons: { icon: [{ url: '/favicon.png?v=2', type: 'image/png' }], shortcut: '/favicon.png?v=2', apple: '/favicon.png?v=2' },
+    icons: { icon: [{ url: 'https://i.ibb.co/qLHt5c6R/Chat-GPT-Image-Mar-23-2026-06-23-40-PM-removebg-preview-1-1.png', type: 'image/png' }], shortcut: 'https://i.ibb.co/qLHt5c6R/Chat-GPT-Image-Mar-23-2026-06-23-40-PM-removebg-preview-1-1.png', apple: 'https://i.ibb.co/qLHt5c6R/Chat-GPT-Image-Mar-23-2026-06-23-40-PM-removebg-preview-1-1.png' },
     openGraph: { title: 'RanEddie', description: site.description, type: 'website' },
     twitter: { card: 'summary_large_image', title: 'RanEddie', description: site.description },
   };
