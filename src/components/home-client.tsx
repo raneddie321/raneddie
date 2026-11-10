@@ -92,14 +92,6 @@ export default function HomeClient({ content }: { content: SiteContent }) {
           ))}
         </div>
       </section>
-      <section className="studio-section" id="studio">
-        <Reveal className="studio-logo"><Logo src={content.site.logo} /></Reveal>
-        <Reveal delay={0.1}>
-          <span>{content.studio.eyebrow}</span>
-          <h2>{content.studio.title}</h2>
-          <p>{content.studio.text}</p>
-        </Reveal>
-      </section>
       <SiteFooter content={content} />
     </main>
   );
