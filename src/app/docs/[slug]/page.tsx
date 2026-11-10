@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getContent } from '@/lib/content-store';
 import { allDocs, sections } from '@/lib/docs';
 import { renderMarkdown } from '@/lib/markdown';
+import { JsonLd, docLd } from '@/lib/seo';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { DocsSidebar } from '@/components/docs-nav';
 
@@ -41,6 +42,7 @@ export default async function DocPage({ params }: Props) {
 
   return (
     <main className="site docs-site" dir="ltr">
+      <JsonLd data={docLd(doc, current.slug)} />
       <SiteHeader site={content.site} />
       <div className="docs-layout">
         <DocsSidebar

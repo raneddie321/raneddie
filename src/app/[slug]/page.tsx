@@ -4,6 +4,7 @@ import { ArrowUpRight, BookOpen, Check } from 'lucide-react';
 import { getContent } from '@/lib/content-store';
 import { renderMarkdown } from '@/lib/markdown';
 import { allDocs } from '@/lib/docs';
+import { JsonLd, productLd } from '@/lib/seo';
 import { slugify } from '@/lib/content';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { CardVisual, HeroVisual } from '@/components/visuals';
@@ -41,6 +42,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <main className="site" dir="ltr">
+      <JsonLd data={productLd(product)} />
       <SiteHeader site={content.site} />
 
       <section className={`hero product-hero hero-${product.visual}`}>
