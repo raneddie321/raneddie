@@ -35,7 +35,7 @@ export const revalidate = 600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { docsHome } = await getContent();
-  return { title: 'Docs', description: docsHome.subtitle };
+  return { title: 'Docs', description: docsHome.subtitle, alternates: { canonical: '/docs' } };
 }
 
 const ICONS: Record<string, React.ReactNode> = {
