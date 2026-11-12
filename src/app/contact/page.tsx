@@ -4,7 +4,7 @@ import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import ContactForm from './contact-form';
 
 export const revalidate = 600;
-export const metadata: Metadata = { title: 'Contact', description: 'Get in touch with RanEddie — support, business, press and privacy.' };
+export const metadata: Metadata = { title: 'Contact', description: 'Get in touch with RanEddie — support, business, press and privacy.', alternates: { canonical: '/contact' } };
 
 export default async function ContactPage() {
   const content = await getContent();

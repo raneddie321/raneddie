@@ -15,6 +15,14 @@ function adminHost(req: NextRequest) {
  */
 function routeAdmin(req: NextRequest): NextResponse | null {
   const { pathname } = req.nextUrl;
+  // One official address for search engines: www.raneddie.com → raneddie.com
+  if ((req.headers.get('host') ?? '').toLowerCase().startsWith('www.raneddie.com')) {
+    const url = req.nextUrl.clone();
+    url.host = 'raneddie.com';
+    url.port = '';
+    url.protocol = 'https:';
+    return NextResponse.redirect(url, 308);
+  }
   const secret = process.env.ADMIN_PATH;
   const notFound = () => NextResponse.rewrite(new URL("/__not-found", req.url), { status: 404 });
 

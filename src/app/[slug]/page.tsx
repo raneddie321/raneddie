@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {};
   return {
     title: product.name,
+    alternates: { canonical: `/${product.slug}` },
     description: product.summary,
     openGraph: { title: `${product.name} — ${product.tagline}`, description: product.summary, ...(product.image && !product.image.endsWith('.svg') ? { images: [product.image] } : {}) },
   };

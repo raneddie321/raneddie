@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const doc = allDocs(await getContent()).find((d) => d.slug === slug);
-  return doc ? { title: `${doc.title} — Docs`, description: doc.description } : {};
+  return doc ? { title: `${doc.title} — Docs`, description: doc.description, alternates: { canonical: `/docs/${doc.slug}` } } : {};
 }
 
 export default async function DocPage({ params }: Props) {
