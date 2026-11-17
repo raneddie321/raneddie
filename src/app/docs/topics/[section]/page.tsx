@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getContent } from '@/lib/content-store';
 import { allDocs, sections } from '@/lib/docs';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
+import { JsonLd, collectionLd, pageMeta } from '@/lib/seo';
 import { DocsSearch } from '@/components/docs-nav';
 
 export const revalidate = 600;
@@ -16,7 +17,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { section } = await params;
   const s = sections(allDocs(await getContent())).find((x) => x.slug === section);
-  return s ? { title: `${s.name} — Docs`, description: `${s.items.length} articles about ${s.name}.`, alternates: { canonical: `/docs/topics/${s.slug}` } } : {};
+  return s ? pageMeta({ title: `${s.name} Docs and Guides`, description: `${s.items.length} RanEddie help articles about ${s.name}: ${s.items.slice(0, 3).map((d) => d.title).join(', ')} and more.`, path: `/docs/topics/${s.slug}` }) : {};
 }
 
 export default async function TopicPage({ params }: Props) {
@@ -29,6 +30,7 @@ export default async function TopicPage({ params }: Props) {
 
   return (
     <main className="site docs-site" dir="ltr">
+      <JsonLd data={collectionLd({ name: `${s.name} Docs`, description: `${s.items.length} articles about ${s.name}.`, path: `/docs/topics/${s.slug}`, items: s.items, crumbs: [{ name: 'Docs', path: '/docs' }, { name: s.name, path: `/docs/topics/${s.slug}` }] })} />
       <SiteHeader site={content.site} />
       <section className="docs-hero docs-hero-small">
         <div>

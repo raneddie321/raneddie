@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getContent } from '@/lib/content-store';
 import { allDocs, sections } from '@/lib/docs';
 import { renderMarkdown } from '@/lib/markdown';
-import { JsonLd, docLd } from '@/lib/seo';
+import { JsonLd, docLd, faqLd, pageMeta } from '@/lib/seo';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { DocsSidebar } from '@/components/docs-nav';
 
@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const doc = allDocs(await getContent()).find((d) => d.slug === slug);
-  return doc ? { title: `${doc.title} — Docs`, description: doc.description, alternates: { canonical: `/docs/${doc.slug}` } } : {};
+  return doc ? pageMeta({ title: `${doc.title} – ${doc.section} Docs`, description: doc.description || `${doc.title} — RanEddie Docs.`, path: `/docs/${doc.slug}`, type: 'article', image: `/docs/${doc.slug}/opengraph-image` }) : {};
 }
 
 export default async function DocPage({ params }: Props) {
@@ -43,6 +43,7 @@ export default async function DocPage({ params }: Props) {
   return (
     <main className="site docs-site" dir="ltr">
       <JsonLd data={docLd(doc, current.slug)} />
+      {faqLd(doc) && <JsonLd data={faqLd(doc)!} />}
       <SiteHeader site={content.site} />
       <div className="docs-layout">
         <DocsSidebar

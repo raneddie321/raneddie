@@ -4,7 +4,7 @@ import { ArrowUpRight, BookOpen, Check } from 'lucide-react';
 import { getContent } from '@/lib/content-store';
 import { renderMarkdown } from '@/lib/markdown';
 import { allDocs } from '@/lib/docs';
-import { JsonLd, productLd } from '@/lib/seo';
+import { JsonLd, pageMeta, productLd } from '@/lib/seo';
 import { slugify } from '@/lib/content';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { CardVisual, HeroVisual } from '@/components/visuals';
@@ -22,12 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = (await getContent()).products.find((p) => p.slug === slug);
   if (!product) return {};
-  return {
-    title: product.name,
-    alternates: { canonical: `/${product.slug}` },
-    description: product.summary,
-    openGraph: { title: `${product.name} — ${product.tagline}`, description: product.summary, ...(product.image && !product.image.endsWith('.svg') ? { images: [product.image] } : {}) },
-  };
+  return pageMeta({ title: `${product.name}: ${product.tagline}`, description: product.summary, path: `/${product.slug}`, image: `/${product.slug}/opengraph-image` });
 }
 
 export default async function ProductPage({ params }: Props) {

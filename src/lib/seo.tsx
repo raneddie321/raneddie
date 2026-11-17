@@ -2,6 +2,7 @@
  * Structured data (schema.org JSON-LD) for search engines. Invisible on the page.
  * Add official profile URLs (Crunchbase, LinkedIn, X, GitHub…) to SAME_AS.
  */
+import type { Metadata } from 'next';
 import type { Product, DocPage } from './content';
 
 export const SITE = 'https://raneddie.com';
@@ -96,4 +97,64 @@ export function docLd(d: DocPage, sectionSlug: string) {
       },
     ],
   };
+}
+
+// ---------------------------------------------------------------- page metadata
+
+const TWITTER = '@RanEddiegk';
+
+/** Title, description, canonical URL, Open Graph and Twitter card for one page. */
+export function pageMeta({ title, description, path, type = 'website', absoluteTitle = false, image = '/opengraph-image' }: { title: string; description: string; path: string; type?: 'website' | 'article'; absoluteTitle?: boolean; image?: string }): Metadata {
+  const img = { url: `${SITE}${image}`, width: 1200, height: 630, alt: title };
+  const fullTitle = absoluteTitle ? title : `${title} | RanEddie`;
+  return {
+    title: absoluteTitle ? { absolute: title } : title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { title: fullTitle, description, url: `${SITE}${path}`, siteName: 'RanEddie', type, locale: 'en_US', images: [img] },
+    twitter: { card: 'summary_large_image', title: fullTitle, description, site: TWITTER, creator: TWITTER, images: [img] },
+  };
+}
+
+/** Docs pages named "<product> FAQ" / "Frequently asked questions" are written as "## Question\nAnswer". */
+export function faqLd(d: DocPage) {
+  const qa = [...d.body.matchAll(/^## (.+\?)\s*\n([\s\S]*?)(?=\n## |\s*$)/gm)]
+    .map(([, q, a]) => ({ q: q.trim(), a: a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '').trim() }))
+    .filter((x) => x.a);
+  if (qa.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: qa.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  };
+}
+
+export function productListLd(products: Product[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'RanEddie products',
+    itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/${p.slug}`, name: p.name })),
+  };
+}
+
+export function collectionLd({ name, description, path, items, crumbs }: { name: string; description: string; path: string; items: { title: string; slug: string }[]; crumbs: { name: string; path: string }[] }) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name,
+        description,
+        url: `${SITE}${path}`,
+        isPartOf: { '@id': `${SITE}/#website` },
+        mainEntity: { '@type': 'ItemList', numberOfItems: items.length, itemListElement: items.slice(0, 100).map((d, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/docs/${d.slug}`, name: d.title })) },
+      },
+      { '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${SITE}${c.path}` })) },
+    ],
+  };
+}
+
+export function webPageLd({ type = 'WebPage', name, description, path }: { type?: 'WebPage' | 'ContactPage' | 'AboutPage'; name: string; description: string; path: string }) {
+  return { '@context': 'https://schema.org', '@type': type, name, description, url: `${SITE}${path}`, isPartOf: { '@id': `${SITE}/#website` }, publisher: { '@id': `${SITE}/#organization` } };
 }
