@@ -56,7 +56,7 @@ export function SiteHeader({ site }: { site: SiteContent['site'] }) {
       <nav className={menu ? 'navlinks open' : 'navlinks'}>
         <a href="/#products" onClick={close}>Products</a>
         <a href="/docs" onClick={close}>Docs</a>
-        <a href="/#studio" onClick={close}>About</a>
+        <a href="/about" onClick={close}>About</a>
         <a href="/contact" onClick={close}>Contact</a>
       </nav>
       <div className="navtools">
@@ -127,7 +127,8 @@ export function SiteFooter({ content }: { content: SiteContent }) {
         </div>
         <div className="footer-col">
           <b>Company</b>
-          <a href="/#studio">About</a>
+          <a href="/about">About</a>
+          <a href="/press">Press</a>
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>
           <a href={`mailto:${content.site.contactEmail}`}>{content.site.contactEmail}</a>
