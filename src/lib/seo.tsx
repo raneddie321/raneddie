@@ -35,7 +35,18 @@ export function organizationLd(contactEmail: string, description: string) {
         logo: { '@type': 'ImageObject', url: `${SITE}/images/raneddie-mark.png`, width: 333, height: 262 },
         description,
         email: contactEmail,
-        contactPoint: [{ '@type': 'ContactPoint', contactType: 'customer support', email: contactEmail, url: `${SITE}/contact`, availableLanguage: ['English'] }],
+        foundingDate: '2024',
+        foundingLocation: { '@type': 'Place', name: 'Israel', address: { '@type': 'PostalAddress', addressCountry: 'IL' } },
+        founder: [
+          { '@type': 'Person', name: 'Eddie Katsir', jobTitle: 'Co-founder' },
+          { '@type': 'Person', name: 'Ran Nachshon', jobTitle: 'Co-founder' },
+        ],
+        slogan: 'One Company. Multiple Industries. Unlimited Possibilities.',
+        address: { '@type': 'PostalAddress', addressCountry: 'IL' },
+        contactPoint: [
+          { '@type': 'ContactPoint', contactType: 'customer support', email: contactEmail, url: `${SITE}/contact`, availableLanguage: ['English', 'Hebrew'] },
+          { '@type': 'ContactPoint', contactType: 'press', email: 'press@raneddie.com', url: `${SITE}/press` },
+        ],
         ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
       },
       {
