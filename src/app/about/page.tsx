@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMeta({
 
 const ABOUT_MD = `RanEddie is a technology and innovation company started in **2024** in **Israel** by two 13-year-old entrepreneurs, **Eddie Katsir** and **Ran Nachshon**. **Tomer Katsir** is the company's adult partner and is responsible for its legal, financial and business side.
 
-Instead of building a single app, RanEddie is built as a multi-industry company: software, artificial intelligence, cloud, gaming, media and consumer technology. Every product connects to one account, [RanEddie ID](https://id.raneddie.com), so people sign in once and use everything.
+Instead of building a single app, RanEddie aims to work across many industries, starting with AI and gaming. Every product connects to one account, [RanEddie ID](https://id.raneddie.com), so people sign in once and use everything.
 
 ## Our mission
 
@@ -21,10 +21,10 @@ To create innovative products, develop valuable technologies, build lasting bran
 
 ## What we're building
 
-- **[Fizz Browser](/fizz)**: the browser that rewards you.
-- **[Snake Brawl](/snake-brawl)**: a fast multiplayer snake game.
+- **[Fizz](/fizz)**: an AI chat, plus Fizz Dev, an AI agent that builds websites, apps and games.
+- **[Snake Brawl](/snake-brawl)**: an Android game that turns classic Snake into an arena battle.
 - **[RanEddie ID](https://id.raneddie.com)**: one free, secure account for every RanEddie product.
-- And more on the way: Cloudly, rEmail, workIT, EditTime, BlueBear Media and others. [See all products](/#products).
+- More products are planned. [See all products](/#products).
 
 ## Our values
 
