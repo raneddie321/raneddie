@@ -7,7 +7,7 @@ import type { Product, DocPage } from './content';
 export const SITE = 'https://raneddie.com';
 export const SAME_AS: string[] = [
   'https://www.crunchbase.com/organization/raneddie',
-  'https://www.facebook.com/people/RanEddie/61596527725996/',
+  'https://www.facebook.com/people/RanEddie/61596527725996/?rdid=P8ilncoQVyLpvyMx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1QuezS6Zfu%2F',
   'https://x.com/RanEddiegk',
   'https://www.instagram.com/raneddie_/',
   'https://www.threads.com/@raneddie_',
