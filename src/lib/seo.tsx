@@ -11,6 +11,8 @@ export const SAME_AS: string[] = [
   'https://x.com/RanEddiegk',
   'https://www.instagram.com/raneddie_/',
   'https://www.threads.com/@raneddie_',
+  'https://www.youtube.com/@raneddie_inc',
+  'https://github.com/RanEddie',
   // 'https://www.linkedin.com/company/…',
 ];
 
