@@ -45,7 +45,7 @@ export function organizationLd(contactEmail: string, description: string) {
         address: { '@type': 'PostalAddress', addressCountry: 'IL' },
         contactPoint: [
           { '@type': 'ContactPoint', contactType: 'customer support', email: contactEmail, url: `${SITE}/contact`, availableLanguage: ['English', 'Hebrew'] },
-          { '@type': 'ContactPoint', contactType: 'press', email: 'press@raneddie.com', url: `${SITE}/press` },
+          { '@type': 'ContactPoint', contactType: 'press', email: 'support@raneddie.com', url: `${SITE}/press` },
         ],
         ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
       },

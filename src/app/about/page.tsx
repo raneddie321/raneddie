@@ -38,7 +38,7 @@ Innovation, ambition, quality, independence, collaboration, responsibility, long
 
 ## Get in touch
 
-Press: [press@raneddie.com](mailto:press@raneddie.com) · Everything else: [contact us](/contact) · [Press kit](/press)
+Press: [support@raneddie.com](mailto:support@raneddie.com) · Everything else: [contact us](/contact) · [Press kit](/press)
 `;
 
 export default async function AboutPage() {

@@ -7,13 +7,13 @@ import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 export const revalidate = 600;
 export const metadata: Metadata = pageMeta({
   title: 'Press and Media Kit',
-  description: 'RanEddie press kit: company facts, founders, logos, product links and press contact (press@raneddie.com).',
+  description: 'RanEddie press kit: company facts, founders, logos, product links and press contact (support@raneddie.com).',
   path: '/press',
 });
 
 const PRESS_MD = `## Press contact
 
-[press@raneddie.com](mailto:press@raneddie.com)
+[support@raneddie.com](mailto:support@raneddie.com)
 
 ## Fast facts
 
