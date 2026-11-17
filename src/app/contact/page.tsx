@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
+import { JsonLd, pageMeta, webPageLd } from '@/lib/seo';
 import { getContent } from '@/lib/content-store';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import ContactForm from './contact-form';
 
 export const revalidate = 600;
-export const metadata: Metadata = { title: 'Contact', description: 'Get in touch with RanEddie — support, business, press and privacy.', alternates: { canonical: '/contact' } };
+export const metadata: Metadata = pageMeta({ title: 'Contact RanEddie', description: 'Contact RanEddie for support, RanEddie ID help, business, press and privacy requests.', path: '/contact' });
 
 export default async function ContactPage() {
   const content = await getContent();
   return (
     <main className="site" dir="ltr">
+      <JsonLd data={webPageLd({ type: 'ContactPage', name: 'Contact RanEddie', description: 'Contact RanEddie for support, business, press and privacy.', path: '/contact' })} />
       <SiteHeader site={content.site} />
       <section className="page-hero">
         <div>

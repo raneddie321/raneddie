@@ -30,12 +30,13 @@ import { getContent } from '@/lib/content-store';
 import { allDocs, sections } from '@/lib/docs';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { DocsSearch } from '@/components/docs-nav';
+import { JsonLd, pageMeta, webPageLd } from '@/lib/seo';
 
 export const revalidate = 600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { docsHome } = await getContent();
-  return { title: 'Docs', description: docsHome.subtitle, alternates: { canonical: '/docs' } };
+  return pageMeta({ title: 'RanEddie Docs: Help, Guides and Answers', description: `${docsHome.subtitle} Over 700 articles on RanEddie ID, privacy, security, AI and every RanEddie product.`, path: '/docs' });
 }
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -103,6 +104,7 @@ export default async function DocsHome() {
 
   return (
     <main className="site docs-site" dir="ltr">
+      <JsonLd data={webPageLd({ name: 'RanEddie Docs', description: content.docsHome.subtitle, path: '/docs' })} />
       <SiteHeader site={content.site} />
       <section className="docs-hero">
         <div>

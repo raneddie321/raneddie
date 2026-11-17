@@ -1,5 +1,5 @@
 /* RanEddie Studio (admin). Scoped under .adm / .adm-login so it never affects the public site. */
-.adm, .adm-login { --a-bg:#f4f6fa; --a-surface:#fff; --a-ink:#111827; --a-muted:#5b6476; --a-line:#e4e8ef; --a-blue:#0878d7; --a-blue-soft:#e8f2fd; --a-red:#c2414b; --a-green:#13865a; font-family:'DM Sans',system-ui,sans-serif; color:var(--a-ink); }
+.adm, .adm-login { --a-bg:#f4f6fa; --a-surface:#fff; --a-ink:#111827; --a-muted:#5b6476; --a-line:#e4e8ef; --a-blue:#0878d7; --a-blue-soft:#e8f2fd; --a-red:#c2414b; --a-green:#13865a; font-family:var(--font-dm-sans),'DM Sans',system-ui,sans-serif; color:var(--a-ink); }
 :root[data-theme="dark"] .adm, :root[data-theme="dark"] .adm-login { --a-bg:#0b0e14; --a-surface:#131821; --a-ink:#f2f4f8; --a-muted:#a2abbb; --a-line:#262e3b; --a-blue:#52aaff; --a-blue-soft:#13263d; }
 
 .adm-login { min-height:100vh; display:grid; place-items:center; padding:24px; background:radial-gradient(ellipse at 30% 20%,#173055 0%,#0b1220 55%,#070910 100%); }
