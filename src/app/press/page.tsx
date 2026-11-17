@@ -21,18 +21,18 @@ const PRESS_MD = `## Press contact
 - **Started:** 2024, Israel
 - **Founders:** Eddie Katsir and Ran Nachshon (both 13)
 - **Partner:** Tomer Katsir
-- **What it does:** a multi-industry technology company: software, AI, cloud, gaming and media, all connected by one account, RanEddie ID
+- **What it does:** a technology company starting with AI and gaming, with products connected by one account, RanEddie ID
 - **Tagline:** One Company. Multiple Industries. Unlimited Possibilities.
 - **Website:** [raneddie.com](https://raneddie.com)
 
 ## Boilerplate
 
-RanEddie is a technology and innovation company started in 2024 in Israel by 13-year-old entrepreneurs Eddie Katsir and Ran Nachshon, with Tomer Katsir as its adult partner. The company builds software, games, AI and digital services connected by a single account, RanEddie ID. Learn more at raneddie.com.
+RanEddie is a technology and innovation company started in 2024 in Israel by 13-year-old entrepreneurs Eddie Katsir and Ran Nachshon, with Tomer Katsir as its adult partner. The company builds AI products and games connected by a single account, RanEddie ID. Learn more at raneddie.com.
 
 ## Products available today
 
-- **Fizz Browser**: [raneddie.com/fizz](/fizz)
-- **Snake Brawl**: [raneddie.com/snake-brawl](/snake-brawl)
+- **Fizz** (AI chat and Fizz Dev AI agent): [raneddie.com/fizz](/fizz)
+- **Snake Brawl** (Android game): [raneddie.com/snake-brawl](/snake-brawl)
 - **RanEddie ID**: [id.raneddie.com](https://id.raneddie.com)
 
 ## Logos
