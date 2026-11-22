@@ -23,6 +23,7 @@ import {
 import {
   DEFAULT_CONTENT,
   RESERVED_SLUGS,
+  normalizeHref,
   slugify,
   type Cta,
   type DocPage,
@@ -82,7 +83,12 @@ function CtaField({ label, value, onChange }: { label: string; value: Cta; onCha
   return (
     <div className="adm-row">
       <Text label={`${label} — text`} value={value.label} onChange={(v) => onChange({ ...value, label: v })} />
-      <Text label={`${label} — link`} value={value.href} placeholder="https://… or /docs/…" onChange={(v) => onChange({ ...value, href: v })} />
+      <div>
+        <Text label={`${label} — link`} value={value.href} placeholder="pandband.raneddie.com, https://… or /docs/…" onChange={(v) => onChange({ ...value, href: v })} />
+        {value.href.trim() && normalizeHref(value.href) !== value.href.trim() && (
+          <small className="adm-link-hint">Opens: {normalizeHref(value.href) || 'nothing (link not allowed)'}</small>
+        )}
+      </div>
     </div>
   );
 }

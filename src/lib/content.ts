@@ -149,6 +149,25 @@ export const DEFAULT_CONTENT: SiteContent = {
   schema: CONTENT_SCHEMA,
 };
 
+/**
+ * A button link exactly as typed in Studio, made into something the browser opens as intended:
+ * "pandband.raneddie.com" or "www.x.com/y" become "https://…" (otherwise the browser would treat them as a page
+ * on raneddie.com). Links that already have a scheme (https:, mailto:, tel:…), site paths ("/docs") and anchors
+ * ("#products") are kept as they are.
+ */
+export function normalizeHref(href: string | undefined | null): string {
+  const h = String(href ?? '').trim();
+  if (!h) return '';
+  if (h.startsWith('//')) return `https:${h}`;
+  if (/^(\/|#|\?)/.test(h)) return h;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(h)) return /^javascript:/i.test(h) ? '' : h;
+  // Looks like a domain (has a dot before any slash): an outside website.
+  if (/^[^\s/]+\.[^\s/]+/.test(h)) return `https://${h}`;
+  // Anything else ("docs", "fizz") is a page on this site.
+  return `/${h}`;
+}
+const cta = <T extends { href: string }>(c: T): T => ({ ...c, href: normalizeHref(c.href) });
+
 /** Fills anything missing in saved content from the defaults, so older saves keep working. */
 export function withDefaults(saved: Partial<SiteContent> | null | undefined): SiteContent {
   if (!saved || typeof saved !== 'object') return DEFAULT_CONTENT;
@@ -161,16 +180,16 @@ export function withDefaults(saved: Partial<SiteContent> | null | undefined): Si
         if (site.logo === OLD_LOGO) site.logo = DEFAULT_LOGO;
         if (site.navCta?.label === 'Get Fizz') site.navCta = d.site.navCta;
       }
-      return site;
+      return { ...site, navCta: cta(site.navCta) };
     })(),
-    slides: Array.isArray(saved.slides) && saved.slides.length ? saved.slides.map((s) => ({ ...d.slides[0], ...s, cta: { ...d.slides[0].cta, ...(s?.cta ?? {}) } })) : d.slides,
+    slides: Array.isArray(saved.slides) && saved.slides.length ? saved.slides.map((s) => ({ ...d.slides[0], ...s, cta: cta({ ...d.slides[0].cta, ...(s?.cta ?? {}) }) })) : d.slides,
     productsSection: { ...d.productsSection, ...(saved.productsSection ?? {}) },
     products: (() => {
       const fill = (p: Partial<Product>): Product => ({
         ...d.products[0],
         ...p,
-        primaryCta: { ...d.products[0].primaryCta, ...(p?.primaryCta ?? {}) },
-        secondaryCta: { ...{ label: '', href: '' }, ...(p?.secondaryCta ?? {}) },
+        primaryCta: cta({ ...d.products[0].primaryCta, ...(p?.primaryCta ?? {}) }),
+        secondaryCta: cta({ ...{ label: '', href: '' }, ...(p?.secondaryCta ?? {}) }),
         features: Array.isArray(p?.features) ? p.features : [],
         platforms: Array.isArray(p?.platforms) ? p.platforms : [],
       });

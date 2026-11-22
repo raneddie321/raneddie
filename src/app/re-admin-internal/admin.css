@@ -127,3 +127,4 @@
 .adm-list .adm-list-section small { font-weight:600; }
 .adm-actions { display:flex; gap:8px; }
 .adm-actions a.adm-btn { text-decoration:none; }
+.adm-link-hint { display:block; margin-top:6px; color:var(--a-muted); font-size:12px; word-break:break-all; }
