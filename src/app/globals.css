@@ -235,3 +235,21 @@ footer.site-footer { display:block; padding:56px clamp(22px,6vw,110px) 26px; }
 .social-links { display:flex; gap:10px; margin-top:18px; }
 .social-links a { width:38px; height:38px; display:grid; place-items:center; border:1px solid var(--line); border-radius:50%; color:var(--muted); transition:.2s; }
 .social-links a:hover { color:#fff; background:var(--blue); border-color:var(--blue); transform:translateY(-2px); }
+/* Headstart campaign */
+.campaign-banner { display:flex; align-items:center; justify-content:center; gap:10px; padding:9px 16px; background:linear-gradient(90deg,#ff2d8a,#0878d7); color:#fff; font-size:14px; line-height:1.4; text-align:center; font-family:var(--font-heebo),var(--font-dm-sans),sans-serif; }
+.campaign-banner:hover { filter:brightness(1.06); }
+.campaign-banner-cta { background:#ffffff26; border-radius:99px; padding:2px 10px; font-weight:700; white-space:nowrap; }
+@media (max-width:620px) { .campaign-banner { font-size:12.5px; gap:7px; padding:8px 12px; } }
+.support-page { max-width:860px; margin:0 auto; padding:56px clamp(20px,5vw,40px) 80px; font-family:var(--font-heebo),var(--font-dm-sans),sans-serif; }
+.support-page h1 { font-size:clamp(34px,5vw,54px); line-height:1.1; letter-spacing:-.03em; margin:14px 0 16px; }
+.support-page .lead { font-size:18px; color:var(--muted); line-height:1.75; margin:0 0 28px; }
+.support-cta { display:inline-flex; align-items:center; gap:10px; background:#ff2d8a; color:#fff; font-weight:800; font-size:17px; padding:16px 26px; border-radius:12px; box-shadow:0 10px 26px #ff2d8a40; }
+.support-cta:hover { transform:translateY(-2px); }
+.support-share { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 8px; }
+.support-share a, .support-share button { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:10px 14px; font-size:14px; font-weight:600; cursor:pointer; }
+.support-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:18px 0 8px; }
+.support-grid article { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px; }
+.support-grid b { display:block; font-size:17px; margin-bottom:4px; }
+.support-grid p { margin:0; color:var(--muted); font-size:14px; line-height:1.6; }
+.support-page h2 { font-size:24px; margin:40px 0 10px; }
+.support-page ul { color:var(--muted); line-height:1.9; padding-inline-start:20px; }
