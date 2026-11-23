@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { getContent } from '@/lib/content-store';
 import { JsonLd, organizationLd } from '@/lib/seo';
 import './globals.css';
+import { CampaignBanner } from '@/components/campaign-banner';
 
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], display: 'swap', variable: '--font-dm-sans' });
 const heebo = Heebo({ subsets: ['latin', 'hebrew'], weight: ['400', '500', '600', '700', '800'], display: 'swap', variable: '--font-heebo' });
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <JsonLd data={organizationLd(site.contactEmail, site.description)} />
       </head>
       <body>
+        <CampaignBanner />
         {clerkEnabled ? <ClerkProvider>{children}</ClerkProvider> : children}
         <Analytics />
       </body>

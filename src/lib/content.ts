@@ -223,4 +223,4 @@ export function slugify(s: string) {
 }
 
 /** Paths a product slug may not use, because the site already has pages there. */
-export const RESERVED_SLUGS = new Set(['privacy', 'terms', 'contact', 'sitemap.xml', 'robots.txt', 'opengraph-image', 'docs', 'api', 'images', '_next', 're-admin-internal', 'admin', 'sign-in', 'sign-up', 'account']);
+export const RESERVED_SLUGS = new Set(['privacy', 'terms', 'contact', 'sitemap.xml', 'robots.txt', 'opengraph-image', 'docs', 'api', 'images', '_next', 're-admin-internal', 'admin', 'sign-in', 'sign-up', 'account', 'support']);
