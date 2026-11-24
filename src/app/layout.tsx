@@ -46,7 +46,7 @@ const themeScript = `try{if(localStorage.getItem('raneddie-theme')==='dark')docu
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
-  const { site } = await getContent();
+  const { site, campaign } = await getContent();
   return (
     <html lang="en" className={`${dmSans.variable} ${heebo.variable}`} suppressHydrationWarning>
       <head>
@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <JsonLd data={organizationLd(site.contactEmail, site.description)} />
       </head>
       <body>
-        <CampaignBanner />
+        <CampaignBanner campaign={campaign} />
         {clerkEnabled ? <ClerkProvider>{children}</ClerkProvider> : children}
         <Analytics />
       </body>

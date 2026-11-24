@@ -1,7 +1,8 @@
-/** The Headstart crowdfunding campaign. The banner and /support hide themselves after it ends. */
-export const CAMPAIGN = {
-  url: 'https://headstart.co.il/project/92954',
-  endsAt: new Date('2027-02-11T23:59:59+02:00'),
-  shareText: 'Two 13-year-olds from Israel are building a tech company, RanEddie. Back them on Headstart 🚀',
-};
-export const campaignLive = (now = new Date()) => now < CAMPAIGN.endsAt;
+import type { Campaign } from './content';
+
+/** Whether the campaign is on and hasn't ended (the end date counts as the last day, Israel time). */
+export function campaignLive(c: Campaign, now = new Date()) {
+  if (!c.enabled || !c.url) return false;
+  const end = /^\d{4}-\d{2}-\d{2}$/.test(c.endsAt) ? new Date(`${c.endsAt}T23:59:59+02:00`) : null;
+  return !end || now <= end;
+}

@@ -2,66 +2,73 @@ import type { Metadata } from 'next';
 import { getContent } from '@/lib/content-store';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { JsonLd, pageMeta, webPageLd } from '@/lib/seo';
-import { CAMPAIGN } from '@/lib/campaign';
+import { campaignLive } from '@/lib/campaign';
 import { ShareButtons } from './share-buttons';
 
 export const revalidate = 600;
-export const metadata: Metadata = pageMeta({
-  title: 'Back RanEddie on Headstart',
-  description: 'Two 13-year-olds from Hadera, Israel are building a tech company: an AI assistant, a PC game and a clothing brand. Back our Headstart campaign.',
-  path: '/support',
-});
 
-const PRODUCTS = [
-  { name: 'Fizz', text: 'An AI assistant, plus Fizz Dev: an agent that builds websites, apps and games.', href: 'https://fizz.raneddie.com' },
-  { name: 'Floppy', text: 'A PC game we are building ourselves, heading for Steam.', href: '' },
-  { name: 'PandBand', text: 'A clothing brand with an online store: tees, hoodies and more.', href: 'https://pandband.raneddie.com' },
-  { name: 'RanEddie ID', text: 'One account for all our products, with privacy and security built in.', href: 'https://id.raneddie.com' },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const { campaign } = await getContent();
+  return pageMeta({ title: campaign.title || 'Back RanEddie', description: campaign.lead.slice(0, 160), path: '/support' });
+}
 
+/** The campaign page. Everything on it is edited in Studio → Campaign. */
 export default async function SupportPage() {
   const content = await getContent();
-  const shareUrl = 'https://raneddie.com/support';
+  const c = content.campaign;
+  const live = campaignLive(c);
+  const money = c.money.map((m) => m.trim()).filter(Boolean);
   return (
     <main className="site">
-      <JsonLd data={webPageLd({ name: 'Back RanEddie', description: 'The RanEddie campaign on Headstart.', path: '/support' })} />
+      <JsonLd data={webPageLd({ name: c.title, description: c.lead.slice(0, 160), path: '/support' })} />
       <SiteHeader site={content.site} />
       <div className="support-page">
-        <span className="kicker">HEADSTART CAMPAIGN</span>
-        <h1>Two 13-year-olds. One tech company. And you.</h1>
-        <p className="lead">
-          We&apos;re Eddie and Ran, both 13, from Hadera, Israel. We started building RanEddie in 2024, and since then we&apos;ve built
-          an AI assistant, a PC game, a clothing brand and one account that connects them all. Now we need you to keep going.
-        </p>
-        <a className="support-cta" href={CAMPAIGN.url} target="_blank" rel="noopener noreferrer">Back us on Headstart →</a>
-        <p style={{ color: 'var(--muted)', fontSize: 14, marginTop: 12 }}>
-          It&apos;s all-or-nothing: if we don&apos;t reach the goal, we get nothing. Every pledge, even ₪18, helps us get there.
-        </p>
+        {c.kicker && <span className="kicker">{c.kicker}</span>}
+        <h1>{c.title}</h1>
+        {c.lead && <p className="lead">{c.lead}</p>}
+        {live ? (
+          <>
+            <a className="support-cta" href={c.url} target="_blank" rel="noopener noreferrer">{c.ctaLabel}</a>
+            {c.note && <p className="support-note">{c.note}</p>}
+          </>
+        ) : (
+          <p className="support-note">The campaign has ended. Thank you to everyone who supported us!</p>
+        )}
 
-        <h2>What we&apos;ve already built</h2>
-        <div className="support-grid">
-          {PRODUCTS.map((p) => (
-            <article key={p.name}>
-              <b>{p.href ? <a href={p.href}>{p.name}</a> : p.name}</b>
-              <p>{p.text}</p>
-            </article>
-          ))}
-        </div>
+        {c.products.length > 0 && (
+          <>
+            <h2>{c.productsTitle}</h2>
+            <div className="support-grid">
+              {c.products.map((p) => (
+                <article key={p.name}>
+                  <b>
+                    {p.href ? <a href={p.href}>{p.name}</a> : p.name}
+                    {p.inDevelopment && <span className="support-badge">In development</span>}
+                  </b>
+                  <p>{p.text}</p>
+                </article>
+              ))}
+            </div>
+          </>
+        )}
 
-        <h2>Where the money goes</h2>
-        <ul>
-          <li>Servers and cloud services our products run on</li>
-          <li>Steam and Google Play developer accounts to launch our games</li>
-          <li>Building our next products and launching Floppy</li>
-        </ul>
+        {money.length > 0 && (
+          <>
+            <h2>{c.moneyTitle}</h2>
+            <ul>{money.map((m, i) => <li key={i}>{m}</li>)}</ul>
+          </>
+        )}
 
-        <h2>You can help without money too</h2>
-        <p className="lead" style={{ fontSize: 16, marginBottom: 0 }}>Share the campaign with one friend. It helps more than you think.</p>
-        <ShareButtons url={shareUrl} text={CAMPAIGN.shareText} />
-
-        <p style={{ marginTop: 34 }}>
-          <a className="support-cta" href={CAMPAIGN.url} target="_blank" rel="noopener noreferrer">Go to the campaign →</a>
-        </p>
+        {live && (
+          <>
+            <h2>{c.shareTitle}</h2>
+            {c.shareText && <p className="lead" style={{ fontSize: 16, marginBottom: 0 }}>{c.shareText}</p>}
+            <ShareButtons url="https://raneddie.com/support" text={c.shareMessage} />
+            <p style={{ marginTop: 34 }}>
+              <a className="support-cta" href={c.url} target="_blank" rel="noopener noreferrer">{c.bottomCtaLabel}</a>
+            </p>
+          </>
+        )}
       </div>
       <SiteFooter content={{ ...content, docs: [] }} />
     </main>
