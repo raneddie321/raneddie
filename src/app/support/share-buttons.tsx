@@ -9,8 +9,8 @@ export function ShareButtons({ url, text }: { url: string; text: string }) {
   const t = encodeURIComponent(text);
   return (
     <div className="support-share">
-      <a href={`https://wa.me/?text=${t}%20${u}`} target="_blank" rel="noopener noreferrer">💬 שיתוף בוואטסאפ</a>
-      <a href={`https://www.facebook.com/sharer/sharer.php?u=${u}`} target="_blank" rel="noopener noreferrer">📘 פייסבוק</a>
+      <a href={`https://wa.me/?text=${t}%20${u}`} target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+      <a href={`https://www.facebook.com/sharer/sharer.php?u=${u}`} target="_blank" rel="noopener noreferrer">📘 Facebook</a>
       <a href={`https://x.com/intent/post?text=${t}&url=${u}`} target="_blank" rel="noopener noreferrer">𝕏 X</a>
       <button
         type="button"
@@ -18,7 +18,7 @@ export function ShareButtons({ url, text }: { url: string; text: string }) {
           try { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
         }}
       >
-        {copied ? '✓ הועתק' : '🔗 העתקת קישור'}
+        {copied ? '✓ Copied' : '🔗 Copy link'}
       </button>
     </div>
   );

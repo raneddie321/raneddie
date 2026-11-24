@@ -7,16 +7,16 @@ import { ShareButtons } from './share-buttons';
 
 export const revalidate = 600;
 export const metadata: Metadata = pageMeta({
-  title: 'תמכו ב-RanEddie בהדסטארט',
-  description: 'שני בני 13 מחדרה בונים חברת טכנולוגיה: עוזר AI, משחק למחשב ומותג בגדים. תמכו בנו בקמפיין בהדסטארט.',
+  title: 'Back RanEddie on Headstart',
+  description: 'Two 13-year-olds from Hadera, Israel are building a tech company: an AI assistant, a PC game and a clothing brand. Back our Headstart campaign.',
   path: '/support',
 });
 
 const PRODUCTS = [
-  { name: 'Fizz', text: 'עוזר בינה מלאכותית, ו-Fizz Dev: סוכן שבונה אתרים, אפליקציות ומשחקים.', href: 'https://fizz.raneddie.com' },
-  { name: 'Floppy', text: 'משחק מחשב שאנחנו מפתחים בעצמנו, לקראת השקה ב-Steam.', href: '' },
-  { name: 'PandBand', text: 'מותג בגדים עם חנות אונליין: חולצות, קפוצ׳ונים ועוד.', href: 'https://pandband.raneddie.com' },
-  { name: 'RanEddie ID', text: 'חשבון אחד לכל המוצרים שלנו, עם פרטיות ואבטחה.', href: 'https://id.raneddie.com' },
+  { name: 'Fizz', text: 'An AI assistant, plus Fizz Dev: an agent that builds websites, apps and games.', href: 'https://fizz.raneddie.com' },
+  { name: 'Floppy', text: 'A PC game we are building ourselves, heading for Steam.', href: '' },
+  { name: 'PandBand', text: 'A clothing brand with an online store: tees, hoodies and more.', href: 'https://pandband.raneddie.com' },
+  { name: 'RanEddie ID', text: 'One account for all our products, with privacy and security built in.', href: 'https://id.raneddie.com' },
 ];
 
 export default async function SupportPage() {
@@ -24,21 +24,21 @@ export default async function SupportPage() {
   const shareUrl = 'https://raneddie.com/support';
   return (
     <main className="site">
-      <JsonLd data={webPageLd({ name: 'תמכו ב-RanEddie', description: 'הקמפיין של RanEddie בהדסטארט.', path: '/support' })} />
+      <JsonLd data={webPageLd({ name: 'Back RanEddie', description: 'The RanEddie campaign on Headstart.', path: '/support' })} />
       <SiteHeader site={content.site} />
-      <div className="support-page" dir="rtl" lang="he">
-        <span className="kicker">קמפיין בהדסטארט</span>
-        <h1>שני בני 13. חברת טכנולוגיה אחת. ואתם.</h1>
+      <div className="support-page">
+        <span className="kicker">HEADSTART CAMPAIGN</span>
+        <h1>Two 13-year-olds. One tech company. And you.</h1>
         <p className="lead">
-          אנחנו אדי ורן, שנינו בני 13 מחדרה. ב-2024 התחלנו לבנות את RanEddie, ומאז בנינו בעצמנו עוזר בינה מלאכותית,
-          משחק למחשב, מותג בגדים וחשבון אחד שמחבר את הכל. עכשיו אנחנו צריכים אתכם כדי להמשיך.
+          We&apos;re Eddie and Ran, both 13, from Hadera, Israel. We started building RanEddie in 2024, and since then we&apos;ve built
+          an AI assistant, a PC game, a clothing brand and one account that connects them all. Now we need you to keep going.
         </p>
-        <a className="support-cta" href={CAMPAIGN.url} target="_blank" rel="noopener noreferrer">תמכו בנו בהדסטארט ←</a>
+        <a className="support-cta" href={CAMPAIGN.url} target="_blank" rel="noopener noreferrer">Back us on Headstart →</a>
         <p style={{ color: 'var(--muted)', fontSize: 14, marginTop: 12 }}>
-          הקמפיין הוא &quot;הכל או כלום&quot;: אם לא נגיע ליעד, לא נקבל כלום. כל תמיכה, גם ₪18, עוזרת לנו להגיע לשם.
+          It&apos;s all-or-nothing: if we don&apos;t reach the goal, we get nothing. Every pledge, even ₪18, helps us get there.
         </p>
 
-        <h2>מה כבר בנינו</h2>
+        <h2>What we&apos;ve already built</h2>
         <div className="support-grid">
           {PRODUCTS.map((p) => (
             <article key={p.name}>
@@ -48,19 +48,19 @@ export default async function SupportPage() {
           ))}
         </div>
 
-        <h2>לאן הולך הכסף</h2>
+        <h2>Where the money goes</h2>
         <ul>
-          <li>שרתים ושירותי ענן שהמוצרים שלנו רצים עליהם</li>
-          <li>חשבונות מפתחים ב-Steam וב-Google Play, כדי להשיק את המשחקים</li>
-          <li>פיתוח המוצרים הבאים והשקה של Floppy</li>
+          <li>Servers and cloud services our products run on</li>
+          <li>Steam and Google Play developer accounts to launch our games</li>
+          <li>Building our next products and launching Floppy</li>
         </ul>
 
-        <h2>אפשר לעזור גם בלי כסף</h2>
-        <p className="lead" style={{ fontSize: 16, marginBottom: 0 }}>שתפו את הקמפיין עם חבר אחד. זה עוזר לנו יותר ממה שנדמה.</p>
+        <h2>You can help without money too</h2>
+        <p className="lead" style={{ fontSize: 16, marginBottom: 0 }}>Share the campaign with one friend. It helps more than you think.</p>
         <ShareButtons url={shareUrl} text={CAMPAIGN.shareText} />
 
         <p style={{ marginTop: 34 }}>
-          <a className="support-cta" href={CAMPAIGN.url} target="_blank" rel="noopener noreferrer">לעמוד הקמפיין ←</a>
+          <a className="support-cta" href={CAMPAIGN.url} target="_blank" rel="noopener noreferrer">Go to the campaign →</a>
         </p>
       </div>
       <SiteFooter content={{ ...content, docs: [] }} />
