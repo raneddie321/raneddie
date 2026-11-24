@@ -52,6 +52,32 @@ export type DocPage = {
   body: string;
 };
 
+export type CampaignProduct = { name: string; text: string; href: string; inDevelopment: boolean };
+export type Campaign = {
+  /** Off = no banner and /support shows nothing about the campaign. */
+  enabled: boolean;
+  url: string;
+  /** YYYY-MM-DD; the banner hides itself after this day. */
+  endsAt: string;
+  bannerText: string;
+  bannerBold: string;
+  bannerCta: string;
+  kicker: string;
+  title: string;
+  lead: string;
+  ctaLabel: string;
+  note: string;
+  productsTitle: string;
+  products: CampaignProduct[];
+  moneyTitle: string;
+  money: string[];
+  shareTitle: string;
+  shareText: string;
+  /** The message people send when they share (WhatsApp, X). */
+  shareMessage: string;
+  bottomCtaLabel: string;
+};
+
 export type SiteContent = {
   site: {
     logo: string;
@@ -68,6 +94,8 @@ export type SiteContent = {
   lab: LabItem[];
   studio: { eyebrow: string; title: string; text: string };
   docsHome: { title: string; subtitle: string };
+  /** The crowdfunding campaign: the banner on every page and the /support page. Edited in Studio → Campaign. */
+  campaign: Campaign;
   /** Docs pages edited or added in Studio (overrides of the built-in library, matched by slug). */
   docs: DocPage[];
   /** Built-in docs pages hidden in Studio. */
@@ -139,6 +167,41 @@ export const DEFAULT_CONTENT: SiteContent = {
     title: 'Ideas into experiences.',
     text: 'RanEddie is an independent product studio building digital products across browsers, games, apps and the web. Thoughtful design, careful engineering, and a belief that software should feel great to use.',
   },
+  campaign: {
+    enabled: true,
+    url: 'https://headstart.co.il/project/92954',
+    endsAt: '2027-02-11',
+    bannerText: 'Two 13-year-olds are building RanEddie.',
+    bannerBold: 'Back us on Headstart',
+    bannerCta: 'Learn more →',
+    kicker: 'HEADSTART CAMPAIGN',
+    title: 'Two 13-year-olds. One tech company. And you.',
+    lead: "We're Eddie and Ran, both 13, from Hadera, Israel. We started building RanEddie in 2024, and since then we've been building an AI assistant, a PC game, a clothing brand and one account that connects them all. Now we need you to keep going.",
+    ctaLabel: 'Back us on Headstart →',
+    note: "It's all-or-nothing: if we don't reach the goal, we get nothing. Every pledge, even ₪18, helps us get there.",
+    productsTitle: "What we're building",
+    products: [
+      { name: 'Fizz', text: 'An AI assistant, plus Fizz Dev: an agent that builds websites, apps and games.', href: 'https://fizz.raneddie.com', inDevelopment: true },
+      { name: 'Floppy', text: 'A PC game we are building ourselves, heading for Steam.', href: '', inDevelopment: true },
+      { name: 'PandBand', text: 'A clothing brand with an online store: tees, hoodies and more.', href: 'https://pandband.raneddie.com', inDevelopment: false },
+      { name: 'RanEddie ID', text: 'One account for all our products, with privacy and security built in.', href: 'https://id.raneddie.com', inDevelopment: false },
+    ],
+    moneyTitle: 'Where the money goes',
+    money: [
+      'Servers, cloud services and AI models our products run on',
+      'Finishing Fizz and launching it to everyone',
+      'Steam and Google Play developer accounts to launch our games',
+      'Launching Floppy and building our next games',
+      'Development tools, software licences and equipment',
+      'Design, branding and new PandBand collections',
+      'Registering the company and the legal side of things',
+      'Marketing, so more people find our products',
+    ],
+    shareTitle: 'You can help without money too',
+    shareText: 'Share the campaign with one friend. It helps more than you think.',
+    shareMessage: 'Two 13-year-olds from Israel are building a tech company, RanEddie. Back them on Headstart 🚀',
+    bottomCtaLabel: 'Go to the campaign →',
+  },
   docsHome: {
     title: 'RanEddie Docs',
     subtitle: 'Guides and answers for RanEddie ID, Fizz Browser and Snake Brawl.',
@@ -206,6 +269,15 @@ export function withDefaults(saved: Partial<SiteContent> | null | undefined): Si
     lab: Array.isArray(saved.lab) ? saved.lab : d.lab,
     studio: { ...d.studio, ...(saved.studio ?? {}) },
     docsHome: { ...d.docsHome, ...(saved.docsHome ?? {}) },
+    campaign: (() => {
+      const c = { ...d.campaign, ...(saved.campaign ?? {}) };
+      return {
+        ...c,
+        url: normalizeHref(c.url) || d.campaign.url,
+        products: Array.isArray(c.products) ? c.products.map((p: Partial<CampaignProduct>) => ({ name: String(p?.name ?? ''), text: String(p?.text ?? ''), href: normalizeHref(p?.href), inDevelopment: Boolean(p?.inDevelopment) })) : d.campaign.products,
+        money: Array.isArray(c.money) ? c.money.filter((m) => typeof m === 'string') : d.campaign.money,
+      };
+    })(),
     docs: Array.isArray(saved.docs) ? saved.docs : d.docs,
     docsRemoved: Array.isArray(saved.docsRemoved) ? saved.docsRemoved : [],
     schema: CONTENT_SCHEMA,

@@ -11,6 +11,7 @@ import {
   FlaskConical,
   Home,
   Mail,
+  Megaphone,
   ImageIcon,
   LogOut,
   Package,
@@ -27,6 +28,7 @@ import {
   slugify,
   type Cta,
   type DocPage,
+  type CampaignProduct,
   type LabItem,
   type Product,
   type SiteContent,
@@ -37,11 +39,12 @@ import { renderMarkdown } from '@/lib/markdown';
 
 /* eslint-disable @next/next/no-img-element */
 
-type Tab = 'home' | 'products' | 'lab' | 'docs' | 'site' | 'images' | 'messages' | 'history';
+type Tab = 'home' | 'products' | 'lab' | 'campaign' | 'docs' | 'site' | 'images' | 'messages' | 'history';
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Homepage', icon: <Home size={17} /> },
   { id: 'products', label: 'Products', icon: <Package size={17} /> },
   { id: 'lab', label: 'About section', icon: <FlaskConical size={17} /> },
+  { id: 'campaign', label: 'Campaign', icon: <Megaphone size={17} /> },
   { id: 'docs', label: 'Docs', icon: <BookOpen size={17} /> },
   { id: 'site', label: 'Site settings', icon: <Settings size={17} /> },
   { id: 'images', label: 'Images', icon: <ImageIcon size={17} /> },
@@ -418,6 +421,99 @@ function LabTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => Site
             <Text label="Title" value={c.studio.title} onChange={(v) => set((c) => ({ ...c, studio: { ...c.studio, title: v } }))} />
           </div>
           <Area label="Text" rows={4} value={c.studio.text} onChange={(v) => set((c) => ({ ...c, studio: { ...c.studio, text: v } }))} />
+        </div>
+      </Panel>
+    </>
+  );
+}
+
+function CampaignTab({ c, set }: { c: SiteContent; set: (fn: (c: SiteContent) => SiteContent) => void }) {
+  const k = c.campaign;
+  const up = (patch: Partial<SiteContent['campaign']>) => set((c) => ({ ...c, campaign: { ...c.campaign, ...patch } }));
+  const upProduct = (i: number, patch: Partial<CampaignProduct>) => up({ products: k.products.map((p, n) => (n === i ? { ...p, ...patch } : p)) });
+  return (
+    <>
+      <Panel title="Campaign" subtitle="The crowdfunding banner on every page and the /support page.">
+        <div className="adm-card">
+          <div className="adm-card-head"><b>Campaign</b></div>
+          <Field label="Show the campaign" hint="Off hides the banner and the campaign buttons on /support.">
+            <select value={k.enabled ? 'yes' : 'no'} onChange={(e) => up({ enabled: e.target.value === 'yes' })}>
+              <option value="yes">On</option>
+              <option value="no">Off</option>
+            </select>
+          </Field>
+          <div className="adm-row">
+            <Text label="Campaign link (Headstart)" value={k.url} onChange={(v) => up({ url: v })} />
+            <Text label="Last day (YYYY-MM-DD)" value={k.endsAt} placeholder="2027-02-11" hint="The banner hides itself after this day." onChange={(v) => up({ endsAt: v })} />
+          </div>
+        </div>
+        <div className="adm-card">
+          <div className="adm-card-head"><b>Banner at the top of every page</b></div>
+          <div className="adm-row">
+            <Text label="Text" value={k.bannerText} onChange={(v) => up({ bannerText: v })} />
+            <Text label="Bold part" value={k.bannerBold} onChange={(v) => up({ bannerBold: v })} />
+          </div>
+          <Text label="Button" value={k.bannerCta} onChange={(v) => up({ bannerCta: v })} />
+        </div>
+        <div className="adm-card">
+          <div className="adm-card-head"><b>/support page</b></div>
+          <div className="adm-row">
+            <Text label="Small label" value={k.kicker} onChange={(v) => up({ kicker: v })} />
+            <Text label="Title" value={k.title} onChange={(v) => up({ title: v })} />
+          </div>
+          <Area label="Intro" rows={4} value={k.lead} onChange={(v) => up({ lead: v })} />
+          <div className="adm-row">
+            <Text label="Main button" value={k.ctaLabel} onChange={(v) => up({ ctaLabel: v })} />
+            <Text label="Bottom button" value={k.bottomCtaLabel} onChange={(v) => up({ bottomCtaLabel: v })} />
+          </div>
+          <Area label="Note under the button" rows={2} value={k.note} onChange={(v) => up({ note: v })} />
+        </div>
+      </Panel>
+      <Panel
+        title="Products on the page"
+        action={
+          <button type="button" className="adm-btn" onClick={() => up({ products: [...k.products, { name: 'New product', text: '', href: '', inDevelopment: true }] })}>
+            <Plus size={15} /> Add product
+          </button>
+        }
+      >
+        <div className="adm-card">
+          <Text label="Section title" value={k.productsTitle} onChange={(v) => up({ productsTitle: v })} />
+        </div>
+        {k.products.map((p, i) => (
+          <div key={i} className="adm-card">
+            <div className="adm-card-head">
+              <b>{p.name || 'Untitled'}</b>
+              <ItemTools
+                index={i}
+                count={k.products.length}
+                onMove={(to) => up({ products: move(k.products, i, to) })}
+                onRemove={() => confirm('Remove this product from the page?') && up({ products: k.products.filter((_, n) => n !== i) })}
+              />
+            </div>
+            <div className="adm-row">
+              <Text label="Name" value={p.name} onChange={(v) => upProduct(i, { name: v })} />
+              <Text label="Link (optional)" value={p.href} placeholder="fizz.raneddie.com" onChange={(v) => upProduct(i, { href: v })} />
+            </div>
+            <Area label="Description" rows={2} value={p.text} onChange={(v) => upProduct(i, { text: v })} />
+            <Field label="Status">
+              <select value={p.inDevelopment ? 'dev' : 'live'} onChange={(e) => upProduct(i, { inDevelopment: e.target.value === 'dev' })}>
+                <option value="live">Available</option>
+                <option value="dev">In development (shows a badge)</option>
+              </select>
+            </Field>
+          </div>
+        ))}
+      </Panel>
+      <Panel title="Where the money goes and sharing">
+        <div className="adm-card">
+          <Text label="Section title" value={k.moneyTitle} onChange={(v) => up({ moneyTitle: v })} />
+          <Area label="Items (one per line)" rows={8} value={k.money.join('\n')} onChange={(v) => up({ money: v.split('\n') })} />
+        </div>
+        <div className="adm-card">
+          <Text label="Sharing title" value={k.shareTitle} onChange={(v) => up({ shareTitle: v })} />
+          <Area label="Sharing text" rows={2} value={k.shareText} onChange={(v) => up({ shareText: v })} />
+          <Area label="Message people send when they share" rows={2} value={k.shareMessage} hint="Used for WhatsApp and X. The link to raneddie.com/support is added automatically." onChange={(v) => up({ shareMessage: v })} />
         </div>
       </Panel>
     </>
@@ -801,6 +897,7 @@ export default function AdminApp({ initial, storageReady }: { initial: SiteConte
         {tab === 'home' && <HomeTab c={content} set={setContent} />}
         {tab === 'products' && <ProductsTab c={content} set={setContent} />}
         {tab === 'lab' && <LabTab c={content} set={setContent} />}
+        {tab === 'campaign' && <CampaignTab c={content} set={setContent} />}
         {tab === 'docs' && <DocsTab c={content} set={setContent} />}
         {tab === 'site' && <SiteTab c={content} set={setContent} />}
         {tab === 'images' && <ImagesTab />}

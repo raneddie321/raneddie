@@ -253,3 +253,7 @@ footer.site-footer { display:block; padding:56px clamp(22px,6vw,110px) 26px; }
 .support-grid p { margin:0; color:var(--muted); font-size:14px; line-height:1.6; }
 .support-page h2 { font-size:24px; margin:40px 0 10px; }
 .support-page ul { color:var(--muted); line-height:1.9; padding-inline-start:20px; }
+.support-note { color:var(--muted); font-size:14px; margin-top:12px; }
+.support-badge { display:inline-block; margin-inline-start:8px; padding:2px 8px; border-radius:99px; background:color-mix(in srgb,#f59e0b 18%,transparent); color:#b45309; font-size:11px; font-weight:700; vertical-align:middle; }
+:root[data-theme="dark"] .support-badge { color:#fbbf24; }
+.support-share svg { flex:none; }
