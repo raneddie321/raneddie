@@ -4,10 +4,10 @@ import { campaignLive } from '@/lib/campaign';
 export function CampaignBanner() {
   if (!campaignLive()) return null;
   return (
-    <a className="campaign-banner" href="/support" dir="rtl" lang="he">
+    <a className="campaign-banner" href="/support">
       <span aria-hidden="true">🚀</span>
-      <span>שני בני 13 בונים את RanEddie. <b>תמכו בנו בהדסטארט</b></span>
-      <span className="campaign-banner-cta">לפרטים ←</span>
+      <span>Two 13-year-olds are building RanEddie. <b>Back us on Headstart</b></span>
+      <span className="campaign-banner-cta">Learn more →</span>
     </a>
   );
 }
