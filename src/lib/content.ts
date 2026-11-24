@@ -183,7 +183,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     products: [
       { name: 'Fizz', text: 'An AI assistant, plus Fizz Dev: an agent that builds websites, apps and games.', href: 'https://fizz.raneddie.com', inDevelopment: true },
       { name: 'Floppy', text: 'A PC game we are building ourselves, heading for Steam.', href: '', inDevelopment: true },
-      { name: 'Editime', text: 'AI video creation: turn an idea into a finished video.', href: '', inDevelopment: true },
+      { name: 'Editime', text: 'A video editor with AI built into every step, from first cut to final colour and sound.', href: '/edittime', inDevelopment: true },
       { name: 'Sam Bot', text: 'An AI bot we are building. More soon.', href: '', inDevelopment: true },
       { name: 'PandBand', text: 'A clothing brand with an online store: tees, hoodies and more.', href: 'https://pandband.raneddie.com', inDevelopment: false },
       { name: 'RanEddie ID', text: 'One account for all our products, with privacy and security built in.', href: 'https://id.raneddie.com', inDevelopment: false },
